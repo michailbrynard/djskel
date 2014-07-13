@@ -1,0 +1,3 @@
+cd ~/Projects/Aptana3/webrt/app
+watchmedo shell-command --patterns="*.less;" --recursive --command='fab -f ../bin/fab_local.py deploy_static' .
+./manage.py runserver

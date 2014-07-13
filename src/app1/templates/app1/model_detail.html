@@ -1,0 +1,133 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_static %}
+
+{% block title %} Beskou Gemeente | {{ gemeente.naam }}{% endblock %}
+
+{% block extrastyle %}{{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% static "admin/css/dashboard.css" %}"/>
+    <style>
+        tr th {
+            width: 150px;
+            text-align: left;
+        }
+    </style>
+{% endblock %}
+
+{% block coltype %}colM{% endblock %}
+
+{% block bodyclass %}{{ block.super }} dashboard {% endblock %}
+
+
+{% block breadcrumbs %}
+    <div class="breadcrumbs">
+        <a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
+        &rsaquo; <a href="{% url "admin:ngka_gemeente_changelist" %}">Gemeentes</a>
+        &rsaquo; Besonderhede
+    </div>
+{% endblock %}
+
+
+{% block content %}
+
+    <div id="content-main">
+        <h1>{{ gemeente.naam }}</h1>
+
+        {% block object-tools %}
+            <ul class="object-tools">
+                <li><a href="/ngka/gemeente/verslag" class="historylink">Finansies</a></li>
+                <li><a href="{% url "admin:ngka_gemeente_change" gemeente.id %}" class="viewsitelink"
+                       class="historylink">Edit</a></li>
+            </ul>
+        {% endblock %}
+
+        <style>
+            .icon-at:before {
+                content: "@";
+                font-weight: 900;
+            }
+        </style>
+
+        <div id="gemeente_detail" style="width: 100%;">
+
+            <table class="detailview">
+                <tr>
+                    <th>Gestig:</th>
+                    <td>{{ gemeente.stig_datum }}</td>
+                </tr>
+                <tr>
+                    <th>Webblad:</th>
+                    <td><a href="{{ gemeente.webtuiste }}" target="_blank">{{ gemeente.webtuiste }}</a></td>
+                </tr>
+                <tr>
+                    <th>Telefoon:</th>
+                    <td>{{ gemeente.telefoon }}</td>
+                </tr>
+                <tr>
+                    <th>E-pos:</th>
+                    <td><a href="mailto:{{ gemeente.epos }}">{{ gemeente.epos }}</a></td>
+                </tr>
+                <tr>
+                    <th>Stand:</th>
+                    <td style="background-color: {% if gemeente.stand == 1 %}green{% elif gemeente.stand == 2 %}yellow {% else %} red {% endif %};">{{ gemeente.get_stand_display }}</td>
+                </tr>
+            </table>
+            <br class="clear"/>
+
+            <h3>Kontak Persoon:
+                <h3>
+                    <table class="detailview">
+                        <tr>
+                            <th>{{ gemeente.kontak.amp.naam }}:</th>
+                            <td>{{ gemeente.kontak.get_titel_display }}
+                                {{ gemeente.kontak.noemnaam }}
+                                {{ gemeente.kontak.van }},
+                                <a href="mailto:{{ gemeente.epos }}">{{ gemeente.kontak.epos }}</a>,
+                                {% if gemeente.kontak.selfoon %}
+                                    &nbsp;&nbsp; <i class="fa fa-lg fa-mobile"></i>&nbsp;{{ gemeente.kontak.selfoon }}
+                                {% endif %}
+                            </td>
+                        </tr>
+                    </table>
+        </div>
+        <br class="clear"/><br class="clear"/><br class="clear"/><br class="clear"/>
+
+        <h2>Predikante</h2>
+
+        <div id="predikant_list">
+            {% for predikant in gemeente.predikant_set.all %}
+                <table>
+                    <tr>
+                        <th>Naam:</th>
+                        <th>{{ predikant }}</th>
+                    </tr>
+                    <tr>
+                        <th>Selfoon:</th>
+                        <td>{{ predikant.selfoon }}</td>
+                    </tr>
+                    <tr>
+                        <th>E-pos:</th>
+                        <td><a href="mailto:{{ predikant.epos }}">{{ predikant.epos }}</a></td>
+                    </tr>
+                    <tr>
+                        <th colspan=2><a href="{% url "ngka:predikant_detail" predikant.id %}">Beskou predikant</a></th>
+                    </tr>
+                </table>
+                <br class="clear"/><br class="clear"/>
+            {% endfor %}
+        </div>
+    </div>
+
+    {% block sidebar %}
+        <div id="content-related">
+
+            {% if gemeente.foto %}
+                <img src="{{ gemeente.foto.url }}"></img>
+            {% endif %}
+
+        </div>
+    {% endblock %}
+
+{% endblock %}
+
+
+
