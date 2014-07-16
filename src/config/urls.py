@@ -20,6 +20,8 @@ urlpatterns = patterns('',
     # App Url
     (r'^admin/filebrowser/', include(site.urls)),
     (r'^grappelli/', include('grappelli.urls')), # grappelli URLS
+    (r'^tinymce/', include('tinymce.urls')),
+
     url(r'^admin/', include(admin.site.urls)),
     url(r'^app1/', include('app1.urls', namespace='app1')),
     

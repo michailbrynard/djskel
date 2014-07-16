@@ -32,6 +32,10 @@ from app1.models import *
 # reversion
 import reversion
 
+# Import / Export
+from import_export.admin import ImportExportMixin
+
+
 # OVERRIDES
 # ---------------------------------------------------------------------------------------------------------------------#
 
@@ -107,11 +111,23 @@ class AdvancedModelInline(admin.TabularInline):
     extra = 2
 
 
+# RESOURCE CLASSES
+# ---------------------------------------------------------------------------------------------------------------------#
+from import_export import resources
+
+class BasicModelResource(resources.ModelResource):
+
+    class Meta:
+        model = BasicModel
+
+
 # MODEL ADMIN
 # ---------------------------------------------------------------------------------------------------------------------#
 
-class BasicModelAdmin(reversion.VersionAdmin):
+class BasicModelAdmin(ImportExportMixin, reversion.VersionAdmin):
 #class BasicModelAdmin(admin.ModelAdmin):
+    resource_class = BasicModelResource
+
     # All fields shortcut
     all = BasicModel._meta.get_all_field_names()
 
@@ -144,7 +160,7 @@ class BasicModelAdmin(reversion.VersionAdmin):
 
     # Add|Change form options
     fieldsets = [
-        (None, {'fields': ['charfield', 'emailfield']}),
+        (None, {'fields': ['charfield', 'emailfield', 'htmlfield']}),
         ('Heading1', {'fields': ['datefield', ('decimalfield', 'integerfield')]}),
         ('Heading2', {'fields': ['imagefield', 'urlfield'], 'classes': ['grp-collapse grp-open', ]}),
         #('Admin',    {'fields': ['created_on', 'updated_on' ], 'classes': ['collapse']}),
@@ -232,6 +248,9 @@ class ChildModelAdmin(admin.ModelAdmin):
 class PermissionAdmin(admin.ModelAdmin):
     list_display = ['content_type', 'codename', 'name']
     list_editable = ['name']
+
+
+
 
 
 # AUTH MODEL ADMIN OVERRIDE

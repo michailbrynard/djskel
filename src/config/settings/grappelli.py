@@ -11,3 +11,5 @@ GRAPPELLI_AUTOCOMPLETE_LIMIT = 5
 ## }
 
 GRAPPELLI_INDEX_DASHBOARD = 'config.dashboard.CustomIndexDashboard'
+
+#TINYMCE_DEFAULT_CONFIG = {'theme': "modern", 'relative_urls': False}

@@ -21,6 +21,9 @@ from django.core.urlresolvers import reverse
 # utils
 from django.utils import timezone
 
+# tinymce
+from tinymce.models import HTMLField
+
 # MIXIN MODELS
 # ---------------------------------------------------------------------------------------------------------------------#
 
@@ -55,6 +58,7 @@ class BasicModel(models.Model):
     charfield = models.CharField(max_length=50, blank=True)
     integerfield = models.IntegerField()
     booleanfield = models.BooleanField(default=False)
+    htmlfield = HTMLField()
 
     OPTION1 = 'O1'
     OPTION2 = 'O2'
