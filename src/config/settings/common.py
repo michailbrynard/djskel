@@ -26,23 +26,36 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
-INSTALLED_APPS = (
+CONTRIB = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+]
+
+EXTENSIONS = [
     'filebrowser',
     'grappelli.dashboard',
     'grappelli',
     'import_export',
     'reversion',
     'tinymce',
+    'rest_framework',
+]
+
+ADMIN_AUTH = [
     'django.contrib.admin',
     'django.contrib.auth',
+]
+
+CUSTOM = [
     #'admin',
     'app1',
-    'app2',
-)
+    'drestf',
+    #'app2',
+]
+
+INSTALLED_APPS = CONTRIB + EXTENSIONS + ADMIN_AUTH + CUSTOM
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -113,6 +126,10 @@ TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'app/config/templates')]
 # Logging
 # https://docs.djangoproject.com/en/dev/topics/logging/
 
+
+# CONFIG DICTIONARIES
+# ---------------------------------------------------------------------------------------------------------------------#
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': True,
@@ -125,21 +142,21 @@ LOGGING = {
         },
     },
     'filters': {
-         'require_debug_false': {
-             '()': 'django.utils.log.RequireDebugFalse',
-         }
-     },
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse',
+        }
+    },
     'handlers': {
         'null': {
             'level': 'DEBUG',
             'class': 'logging.NullHandler',
         },
-        'console':{
+        'console': {
             'level': 'DEBUG',
             'class': 'logging.StreamHandler',
             'formatter': 'simple'
         },
-        'file':{
+        'file': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
             'formatter': 'verbose',
@@ -163,4 +180,20 @@ LOGGING = {
             'propagate': False,
         },
     }
+}
+
+REST_FRAMEWORK = {
+    # Use hyperlinked styles by default.
+    # Only used if the `serializer_class` attribute is not set on a view.
+    'DEFAULT_MODEL_SERIALIZER_CLASS':
+        'rest_framework.serializers.HyperlinkedModelSerializer',
+
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
+    ],
+
+    #'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAdminUser',),
+    'PAGINATE_BY': 10
 }

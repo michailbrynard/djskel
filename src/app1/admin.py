@@ -308,7 +308,35 @@ admin.site.register(BasicModel, BasicModelAdmin)
 admin.site.register(MyUser, MyUserAdmin)
 
 admin.site.register(ChildModel, ChildModelAdmin)
-admin.site.register(ProxyModel, ProxyModelAdmin)
 
-admin.site.register(ProxyUser, ProxyUserAdmin)
 admin.site.register(Permission, PermissionAdmin)
+
+class PersonAdmin(admin.ModelAdmin):
+    all = Person._meta.get_all_field_names()
+    list_display = [field for field in all if not (field.endswith('_id') or field == 'id' or field.endswith('_ptr'))]
+
+class CompanyAdmin(admin.ModelAdmin):
+
+    # - by annotation
+    def queryset(self, request):
+        from django.db.models import Count
+
+        qs = super(CompanyAdmin, self).queryset(request)
+        return qs.annotate(aggregation=Count('person'))
+
+    @staticmethod
+    def aggregationfield(obj):
+        return obj.aggregation
+    aggregationfield.short_description = 'Employees'
+    aggregationfield.admin_order_field = 'aggregation'
+
+    # Change|View list options
+    list_display = ('name', 'owner', 'aggregationfield')
+    search_fields = ['name', 'owner__name']
+
+
+admin.site.register(Person, PersonAdmin)
+admin.site.register(Company, CompanyAdmin)
+
+
+

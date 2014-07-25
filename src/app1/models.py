@@ -145,37 +145,22 @@ class ChildModel(BasicModel):
     additionalfield = models.CharField(max_length=45, blank=False)
 
 
-# PROXY MODELS
-# ---------------------------------------------------------------------------------------------------------------------#
-
-class ProxyModel(BasicModel):
-    class Meta:
-        proxy = True
-        app_label = 'app2'
-
-        permissions = (('view_basicmodel', 'Can view Basic Model'),)
-        default_permissions = ()
-        verbose_name = "Basic Model"
-        verbose_name_plural = "Basic Models"
-
-
-class ProxyUser(User):
-    class Meta:
-        proxy = True
-        app_label = 'app2'
-        verbose_name = User._meta.verbose_name
-        verbose_name_plural = User._meta.verbose_name_plural
-
-
-class ProxyGroup(Group):
-    class Meta:
-        proxy = True
-        app_label = 'app2'
-        verbose_name = Group._meta.verbose_name
-        verbose_name_plural = Group._meta.verbose_name_plural
-
-
 class MyUser(User):
     company = models.CharField(max_length=50)
-        
 
+
+class Person(AbstractBaseModel):
+    name = models.CharField(max_length=20)
+    age = models.IntegerField(blank=True, null=True)
+    employer = models.ForeignKey('Company', blank=True, null=True)
+
+    def __str__(self):
+        return self.name
+
+
+class Company(AbstractBaseModel):
+    name = models.CharField(max_length=20)
+    owner = models.OneToOneField(Person)
+
+    def __str__(self):
+        return self.name

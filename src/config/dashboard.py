@@ -61,12 +61,17 @@ class CustomIndexDashboard(Dashboard):
         
         # append another link list module for "support".
         self.children.append(modules.LinkList(
-            _('Media Management'),
+            _('Django Tools'),
             column=2,
             children=[
                 {
                     'title': _('FileBrowser'),
                     'url': '/admin/filebrowser/browse/',
+                    'external': False,
+                },
+                {
+                    'title': _('API'),
+                    'url': '/api/',
                     'external': False,
                 },
             ]

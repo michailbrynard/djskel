@@ -23,6 +23,7 @@ urlpatterns = patterns('',
     (r'^tinymce/', include('tinymce.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^api/', include('drestf.urls')),
     url(r'^app1/', include('app1.urls', namespace='app1')),
     
 )+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
