@@ -1,0 +1,1 @@
+django-admin startproject --template=project_template --extension=py --extension=conf --extension=sh --extension=ini mysite

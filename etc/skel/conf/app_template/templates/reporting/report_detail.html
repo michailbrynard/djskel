@@ -1,0 +1,107 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_static %}
+
+{% block title %} Report | {{ report.customer }}{% endblock %}
+
+{% block coltype %}colM{% endblock %}
+{% block bodyclass %}{{ block.super }} changelist {% endblock %}
+
+
+{% block extrastyle %}{{ block.super }}
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.css"/>
+    <!--<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">-->
+
+	<!-- Custom styles for this template -->
+	<link rel="stylesheet" href="/static/reporting/css/style.css" type="text/css" media="screen" />
+{% endblock %}
+
+{% block extrahead %}{{ block.super }}
+<script src="{% static "reporting/js/toc.js"  %}"></script>
+
+<script>
+	$(window).bind('beforeunload', function() {
+	    if ($('#edits').prop('checked') == true) {
+	        return 'Are you sure?';
+	    }
+	});
+
+</script>
+
+{% endblock %}
+
+{% block breadcrumbs %}
+	<div class="breadcrumbs">
+		<a href="{% url 'admin:index' %}">{% trans 'Portal' %}</a>
+		&rsaquo; <a href="{% url 'admin:app_list' app_label='reporting' %}">SLA Reports</a>
+		{% if perms.reporting.change_report %}
+		&rsaquo; <a href="{% url "admin:reporting_report_changelist" %}">Reports</a>
+		&rsaquo; <a href="{% url "admin:reporting_report_changelist" %}?q={{ report.customer.code }}">{{ report.customer.code }}</a>
+		{% endif %}
+		&rsaquo; Report - {{ report.report_period }}
+	</div>
+{% endblock %}
+
+{% block content %}
+<div class="report_header clearfix hidden-print">
+	<p class="h1" style="margin-top: 5px; float: left;">Report Period: {{report.report_period}} - Version {{report.version}}</p>
+</div>
+
+{% block object-tools %}
+  <ul class="object-tools">
+    {# <li><a href="{% url "reporting:url_iris_customer" report.customer.id  %}" class="btn btn-md hidden-print">View Graphs</a></li> #}
+  	<li><a target="_blank" href="{% url "reporting:report_download" report.slug  %}" class="btn btn-md hidden-print">Download PDF</a></li>
+  	<li><a href="{% url "reporting:report_detail" report.slug %}" class="btn btn-md hidden-print" >
+		Refresh &nbsp;&nbsp; <span class="glyphicon glyphicon-refresh"> </span></a></li>
+
+  </ul>
+{% endblock %}
+
+<div id="toc" class="toc"> </div>
+
+<!-- Begin page content -->
+<div id="contents" class="content report">
+	
+	{% include "reporting/base_report.html" with report=report %}
+		
+	<!-- Modal -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	    <div class="modal-dialog">
+	        <div class="modal-content">
+	            <div class="modal-header" style="padding: 10px 15px 23px;">
+	                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	            </div>
+	            <div class="modal-body">
+	            	<div class="te" style="text-align: center;">
+	            		<img src="{% static "reporting/img/demo_wait.gif"  %}">
+	            	</div>
+	            </div>
+	        </div>
+	        <!-- /.modal-content -->
+	    </div>
+	    <!-- /.modal-dialog -->
+	</div>
+	<!-- /.modal -->
+		
+</div>
+
+{% endblock %}
+
+{% block extrascript %}
+	<script src="{% static "bootstrap/js/jquery.min.js"  %}"></script>
+	<script src="{% static "bootstrap/js/bootstrap.min.js"  %}"></script>
+
+	<!--
+	<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+   -->
+
+    <script>
+    	htmlwait = '<div class="te" style="text-align: center;"><img src="{% static "reporting/img/demo_wait.gif"  %}"></img></div>';
+        $('body').on('hidden.bs.modal', '.modal', function () {
+            $(this).removeData('bs.modal').find(".modal-body").html(htmlwait);
+        });
+
+    </script>
+
+{% endblock %}

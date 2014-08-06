@@ -1,0 +1,49 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_static %}
+
+{% block title %} Report List | {{ customer.name }}{% endblock %}
+
+{% block coltype %}colM{% endblock %}
+{% block bodyclass %}{{ block.super }} changelist {% endblock %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+<a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
+&rsaquo; <a href="{% url "admin:reporting_customer_changelist" %}">Customers</a>
+&rsaquo; {{ customer.code }}
+</div>
+{% endblock %}
+
+{% block content %}
+
+<div id="content-main">
+	
+	<h1>Reports for {{ customer.name }}</h1>
+	{% block object-tools %}
+	  <ul class="object-tools">
+	    <li><a href="{% url 'reporting:url_customer_graphs' customer.code  %}" class="viewsitelink">Graphs</a></li>
+	  	{% if user.ldapuser.auth_type != customer %}
+	  	<li><a href="{% url "admin:reporting_customer_change" customer.pk  %}" class="editlink">Edit</a></li>
+	  	{% endif %}
+	  </ul>
+	{% endblock %}
+	<h2><i>{{ customer.code }}</i></h2>
+
+    <div class="table-container" id="report_list">
+        <table class="table-reports">
+            <thead><th>Report Period</th><th>Updated On</th><th>Version</th><th>Link</th></thead>
+            {% for report in customer.report_set.all %}
+	            {% if report.approved or not report.version %}
+	            <tr>
+	            	<td>{{report.report_period_disp}}</td>
+	            	<td>{{report.updated_on}}</td>
+	            	<td style="padding-left: 10px;">{{report.version}}</td>
+	            	<td><a href="{% url "reporting:report_detail" report.slug %}">HTML</a></td>
+	            </tr>
+	            {% endif %}
+            {% endfor %}
+        </table>
+    </div>
+</div>
+
+{% endblock %}
