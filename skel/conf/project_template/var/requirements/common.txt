@@ -4,3 +4,10 @@ django-grappelli
 django-reversion
 django-filebrowser
 pytz
+diff-match-patch
+django-filter
+django-import-export
+django-tinymce
+djangorestframework
+simplejson
+tablib

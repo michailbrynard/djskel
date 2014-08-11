@@ -3,6 +3,7 @@ __pycache__
 *.pyc
 *.sock
 *.pyc
+*.bak
 *.log
 
 var/log/*
@@ -14,5 +15,6 @@ tmp/*
 .project
 .pydevproject
 .settings
-.ideas
+.ideas/workspace.xml
+.ideas/tasks.xml
 .ipynb_checkpoints

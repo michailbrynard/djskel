@@ -132,20 +132,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 )
 
 TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'app/config/templates')]
-
-
-# DATE AND TIME FORMATES
-# ---------------------------------------------------------------------------------------------------------------------
-# See http://docs.djangoproject.com/en/dev/ref/templates/builtins/#date
-
-DATE_FORMAT = 'Y-m-d'
-DATETIME_FORMAT = 'Y-m-d H:i:s'
-TIME_FORMAT = 'H:i'
-YEAR_MONTH_FORMAT = 'F Y'
-MONTH_DAY_FORMAT = 'F j'
-SHORT_DATE_FORMAT = 'Y-m-d'
-SHORT_DATETIME_FORMAT = 'Y-m-d H:i:s'
-
+FORMAT_MODULE_PATH = ['config.formats', ]
 
 # LOGGING
 # ---------------------------------------------------------------------------------------------------------------------
