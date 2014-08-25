@@ -1,5 +1,5 @@
 """
-Django settings for ngkdb project.
+Django settings for djskel project.
 
 For more information on this file, see
 https://docs.djangoproject.com/en/dev/topics/settings/
@@ -8,32 +8,47 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/dev/ref/settings/
 """
 
+__version__ = '0.1'
+__author__ = 'JR Minnaar <jr.minnaar@gmail.com>'
+
+ADMINS = (('JR Minnaar', 'jr.minnaar@gmail.com'), )
+
+# DIRECTORIES
+# ---------------------------------------------------------------------------------------------------------------------
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
-BASE_DIR = os.path.join('..', BASE_DIR)
+BASE_DIR = os.path.join('../../../../../../../../..////', os.path.dirname(__file__))
+PROJECT_DIR = os.path.join('..////', BASE_DIR)
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/dev/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'id7^prs+mb7ntifiww6lt7*hdkz$#@wp8be2ww&&@q+o!plz81'
+SECRET_KEY = '9726parorwy*g4+1jk#eger546f*_=33z=4-y2xd2*r1czoj7d'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 TEMPLATE_DEBUG = True
 ALLOWED_HOSTS = []
 
-# Application definition
 
-CONTRIB = [
+# APPLICATIONS
+# ---------------------------------------------------------------------------------------------------------------------
+
+ADMIN_AUTH = (
+    'django.contrib.admin',
+    'django.contrib.auth',
+)
+
+CONTRIB = (
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-]
+)
 
-EXTENSIONS = [
+EXTENSIONS = (
     'filebrowser',
     'grappelli.dashboard',
     'grappelli',
@@ -41,61 +56,58 @@ EXTENSIONS = [
     'reversion',
     'tinymce',
     'rest_framework',
-]
+    'guardian'
+)
 
-ADMIN_AUTH = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-]
+PROJECT_APPS = (
+    'basic_demo',
+    #'celerey_demo',
+    #'restful_demo',
+    #'gis_demo',
+)
 
-CUSTOM = [
-    #'admin',
-    'app1',
-    'drestf',
-    #'app2',
-]
-
-INSTALLED_APPS = CONTRIB + EXTENSIONS + ADMIN_AUTH + CUSTOM
+INSTALLED_APPS = CONTRIB + EXTENSIONS + ADMIN_AUTH + PROJECT_APPS
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
 ROOT_URLCONF = 'config.urls'
+LOGIN_URL = '/login'
+LOGOUT_URL = '/logout'
+WSGI_APPLICATION = 'config.wsgi.application'
 
-WSGI_APPLICATION = 'config.wsgi.development.application'
 
-
-# Database
+# Databases
+# ---------------------------------------------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'data', 'db.sqlite3'),
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
 # Internationalization
+# ---------------------------------------------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/topics/i18n/
 
 LANGUAGE_CODE = 'en_ZA'
-
 TIME_ZONE = 'Africa/Johannesburg'
-
 USE_I18N = True
-
 USE_L10N = True
-
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
+# Static files
+# ---------------------------------------------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/howto/static-files/
 
 STATIC_URL = '/static/'
@@ -104,31 +116,28 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'var/www/static')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'var/www/media')
 
-# Authentication 
-# https://docs.djangoproject.com/en/dev/
-
-LOGIN_URL = '/login'
 
 # Template files
+# ---------------------------------------------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/howto/static-files/
-
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.auth.context_processors.auth',
-    'django.core.context_processors.request',
+    'django.core.context_processors.debug',
     'django.core.context_processors.i18n',
+    'django.core.context_processors.media',
+    'django.core.context_processors.static',
+    'django.core.context_processors.tz',
+    'django.core.context_processors.request',
     'django.contrib.messages.context_processors.messages',
-    'app1.context_processor.more_context'
 )
 
 TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'app/config/templates')]
+FORMAT_MODULE_PATH = ['config.formats', ]
 
-# Logging
-# https://docs.djangoproject.com/en/dev/topics/logging/
-
-
-# CONFIG DICTIONARIES
-# ---------------------------------------------------------------------------------------------------------------------#
+# LOGGING
+# ---------------------------------------------------------------------------------------------------------------------
+# See https://docs.djangoproject.com/en/dev/topics/logging/
 
 LOGGING = {
     'version': 1,
@@ -160,7 +169,7 @@ LOGGING = {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
             'formatter': 'verbose',
-            'filename': os.path.join(BASE_DIR, 'var/log/', 'ngkdb.log')
+            'filename': os.path.join(BASE_DIR, 'var/log/', 'django.log')
         },
         'mail_admins': {
             'level': 'ERROR',
@@ -182,18 +191,11 @@ LOGGING = {
     }
 }
 
-REST_FRAMEWORK = {
-    # Use hyperlinked styles by default.
-    # Only used if the `serializer_class` attribute is not set on a view.
-    'DEFAULT_MODEL_SERIALIZER_CLASS':
-        'rest_framework.serializers.HyperlinkedModelSerializer',
-
-    # Use Django's standard `django.contrib.auth` permissions,
-    # or allow read-only access for unauthenticated users.
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
-    ],
-
-    #'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAdminUser',),
-    'PAGINATE_BY': 10
-}
+# LOCAL IMPORTS
+# ---------------------------------------------------------------------------------------------------------------------
+try:
+    from config.settings.extensions.grappelli import *
+    from config.settings.extensions.rest_framework import *
+    from config.settings.extensions.guardian import *
+except ImportError:
+    pass

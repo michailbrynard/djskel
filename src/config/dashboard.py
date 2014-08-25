@@ -3,7 +3,7 @@ This file was generated with the customdashboard management command and
 contains the class for the main dashboard.
 
 To activate your index dashboard add the following to your settings.py::
-    GRAPPELLI_INDEX_DASHBOARD = 'djskel_grappelli.dashboard.CustomIndexDashboard'
+    GRAPPELLI_INDEX_DASHBOARD = 'djskel.dashboard.CustomIndexDashboard'
 """
 
 from django.utils.translation import ugettext_lazy as _

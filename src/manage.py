@@ -3,13 +3,7 @@ import os
 import sys
 
 if __name__ == "__main__":
-    ENV = "config.settings.development"
-    
-    from socket import gethostname
-    if gethostname() == 'ocean.wolkie.tk':
-        ENV = "config.settings.production"
-    
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", ENV)
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings.development")
 
     from django.core.management import execute_from_command_line
 

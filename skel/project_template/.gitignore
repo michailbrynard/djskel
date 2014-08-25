@@ -1,0 +1,16 @@
+__pycache__
+
+*.pyc
+*.sock
+*.pyc
+*.bak
+*.log
+
+var/cache/*
+var/www/static/*
+var/www/media/*
+tmp/*
+
+.ideas/workspace.xml
+.ideas/tasks.xml
+.ipynb_checkpoints
