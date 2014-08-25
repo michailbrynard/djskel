@@ -17,8 +17,8 @@ ADMINS = (('JR Minnaar', 'jr.minnaar@gmail.com'), )
 # ---------------------------------------------------------------------------------------------------------------------
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
-BASE_DIR = os.path.join('../../../../..///', os.path.dirname(__file__))
-PROJECT_DIR = os.path.join('..///', BASE_DIR)
+BASE_DIR = os.path.join(os.path.dirname(__file__), '../..')
+PROJECT_DIR = os.path.join(BASE_DIR, '../')
 
 
 # Quick-start development settings - unsuitable for production
@@ -169,7 +169,7 @@ LOGGING = {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
             'formatter': 'verbose',
-            'filename': os.path.join(BASE_DIR, 'var/log/', 'django.log')
+            'filename': os.path.join(PROJECT_DIR, 'var/log/', 'django.log')
         },
         'mail_admins': {
             'level': 'ERROR',

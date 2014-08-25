@@ -17,15 +17,15 @@ ADMINS = (('JR Minnaar', 'jr.minnaar@gmail.com'), )
 # ---------------------------------------------------------------------------------------------------------------------
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
-BASE_DIR = os.path.join('../../../../../../../../..////', os.path.dirname(__file__))
-PROJECT_DIR = os.path.join('..////', BASE_DIR)
+BASE_DIR = os.path.join(os.path.dirname(__file__), '../..')
+PROJECT_DIR = os.path.join(BASE_DIR, '../')
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/dev/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '9726parorwy*g4+1jk#eger546f*_=33z=4-y2xd2*r1czoj7d'
+SECRET_KEY = '8d_xl%)c1y-=kp3lavjfek-q99l)pv-_@7845c)pa=is-oe_6k'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -60,7 +60,7 @@ EXTENSIONS = (
 )
 
 PROJECT_APPS = (
-    'basic_demo',
+    #'basic_demo',
     #'celerey_demo',
     #'restful_demo',
     #'gis_demo',
@@ -169,7 +169,7 @@ LOGGING = {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
             'formatter': 'verbose',
-            'filename': os.path.join(BASE_DIR, 'var/log/', 'django.log')
+            'filename': os.path.join(PROJECT_DIR, 'var/log/', 'django.log')
         },
         'mail_admins': {
             'level': 'ERROR',

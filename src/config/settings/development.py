@@ -18,7 +18,7 @@ INSTALLED_APPS += ('debug_toolbar.apps.DebugToolbarConfig', )
 EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
 EMAIL_FILE_PATH = os.path.join(PROJECT_DIR, 'var/log/emails')
 
-WSGI_APPLICATION = 'config.uwsgi.application'
+WSGI_APPLICATION = 'config.wsgi.development.application'
 
 BASE_URL = 'http://127.0.0.1:8000/'
 

@@ -1,8 +1,9 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
-from drestf.serializers import UserSerializer, GroupSerializer, PersonSerializer, CompanySerializer
+from .serializers import UserSerializer, GroupSerializer
+#from .serializers import PersonSerializer, CompanySerializer
 
-from app1.models import Company, Person
+#from demo.models import Company, Person
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -21,17 +22,17 @@ class GroupViewSet(viewsets.ModelViewSet):
     serializer_class = GroupSerializer
 
 
-class PersonViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows groups to be viewed or edited.
-    """
-    queryset = Person.objects.all()
-    serializer_class = PersonSerializer
+#class PersonViewSet(viewsets.ModelViewSet):
+#    """
+#    API endpoint that allows groups to be viewed or edited.
+#    """
+#    queryset = Person.objects.all()
+#    serializer_class = PersonSerializer
 
 
-class CompanyViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows groups to be viewed or edited.
-    """
-    queryset = Company.objects.all()
-    serializer_class = CompanySerializer
+#class CompanyViewSet(viewsets.ModelViewSet):
+#    """
+#    API endpoint that allows groups to be viewed or edited.
+#    """
+#    queryset = Company.objects.all()
+#    serializer_class = CompanySerializer

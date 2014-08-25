@@ -3,6 +3,5 @@ AUTHENTICATION_BACKENDS = (
     'guardian.backends.ObjectPermissionBackend',
 )
 
-
 # DJANGO GUARDIAN
 ANONYMOUS_USER_ID = -1

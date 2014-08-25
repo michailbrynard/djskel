@@ -4,9 +4,8 @@ __pycache__
 *.sock
 *.pyc
 *.bak
-var/log/project_name.log
+*.log
 
-var/log/*
 var/cache/*
 var/www/static/*
 var/www/media/*

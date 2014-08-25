@@ -1,1 +1,12 @@
-django-admin startproject --template=project_template --extension=py --extension=conf --extension=sh --extension=ini mysite
+django-admin startproject --template=skel/project_template --extension=py --extension=conf --extension=sh --extension=ini djskel
+
+mv djskel/* ./
+rm -R djskel
+
+chmod +x src/manage.py
+
+pip install -r -U var/requirements/development.txt
+
+./src/manage.py syncdb
+
+./manage.py --template=src/app_template src/app_name

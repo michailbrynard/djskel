@@ -6,7 +6,9 @@ from django.views.generic import RedirectView
 
 from filebrowser.sites import site
 
+from django.contrib import admin
 from django.contrib.auth.views import login
+
 
 urlpatterns = patterns('',
     # Examples:
