@@ -1,9 +1,18 @@
-default_app_config = '.apps.CustomConfig'
+# LOGGING
+# ---------------------------------------------------------------------------------------------------------------------#
+import logging
+logger = logging.getLogger('django')
 
+# APP CONFIG
+# ---------------------------------------------------------------------------------------------------------------------#
+default_app_config = '{{ app_name }}.apps.CustomConfig'
+
+
+# APP PERMISSIONS
+# ---------------------------------------------------------------------------------------------------------------------#
 #from django.db.models.signals import post_syncdb
 #from django.contrib.contenttypes.models import ContentType
 #from django.contrib.auth import models
-
 
 # custom user related permissions
 #def add_user_permissions(sender, **kwargs):

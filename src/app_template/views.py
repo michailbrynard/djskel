@@ -1,30 +1,19 @@
 # LOGGING
 # ---------------------------------------------------------------------------------------------------------------------#
 import logging
-
-log = logging.getLogger(__name__)
-log.setLevel(logging.DEBUG)
-
+logger = logging.getLogger('django')
 
 # IMPORTS
-#----------------------------------------------------------------------------------------------------------------------#
+# ---------------------------------------------------------------------------------------------------------------------#
 # shortcuts
 from django.shortcuts import render
-
-# views.generic
-from django.views.generic import DetailView
-
 # contrib.auth
 from django.contrib.auth.decorators import login_required
+# views.generic
+from django.views.generic import DetailView
+# {{ app_name }}
+from .models import *
 
-# conf
-
-# core
-
-# utils
-
-# app
-from .skel.app_template.models import *
 
 # GENERIC CLASS BASED VIEWS
 # ---------------------------------------------------------------------------------------------------------------------#

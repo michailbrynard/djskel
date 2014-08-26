@@ -1,50 +1,36 @@
 # LOGGING
 # ---------------------------------------------------------------------------------------------------------------------#
 import logging
+logger = logging.getLogger('django')
 
-log = logging.getLogger(__name__)
-log.setLevel(logging.DEBUG)
 
 # IMPORTS
 # ---------------------------------------------------------------------------------------------------------------------#
-# forms
-from django import forms
-
 # http
-from django.http import HttpResponseRedirect
-
+#from django.http import HttpResponseRedirect
 # contrib
 from django.contrib import admin
 # # admin
-from django.contrib.admin.views.main import ChangeList
-from django.contrib.admin.util import quote
+#from django.contrib.admin.views.main import ChangeList
+#from django.contrib.admin.util import quote
 # # auth
-from django.contrib.auth.admin import UserAdmin
-from django.contrib.auth.models import User, Permission
-
+#from django.contrib.auth.admin import UserAdmin
+#from django.contrib.auth.models import User, Permission
 # core
-from django.core.urlresolvers import reverse
-
-# app1
-from app1.models import *
+#from django.core.urlresolvers import reverse
 
 # reversion
 import reversion
 
 # Import / Export
 from import_export.admin import ImportExportMixin
+from import_export import resources
 
 from read_only.admin import ReadOnlyAdmin
 
-# OVERRIDES
-# ---------------------------------------------------------------------------------------------------------------------#
-
-
-# Form overides
-class AdvancedModelForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        super(AdvancedModelForm, self).__init__(*args, **kwargs)
-        self.fields['fkbasic'].queryset = ChildModel.objects.filter(fkadvanced=self.instance)
+# {{ app_name }}
+from .forms import *
+from .models import *
 
 
 # MODEL INLINES
@@ -67,8 +53,6 @@ class AdvancedModelInline(admin.TabularInline):
 
 # RESOURCE CLASSES
 # ---------------------------------------------------------------------------------------------------------------------#
-from import_export import resources
-
 class BasicModelResource(resources.ModelResource):
 
     class Meta:
@@ -102,7 +86,6 @@ class BasicModelAdmin(ImportExportMixin, reversion.VersionAdmin):
 
     def aggregationfield(self, obj):
         return obj.aggregation
-
     aggregationfield.short_description = 'Aggregation'
     aggregationfield.admin_order_field = 'aggregation'
 
@@ -131,7 +114,6 @@ class BasicModelAdmin(ImportExportMixin, reversion.VersionAdmin):
     #    return ViewList
 
 
-@admin.register(AdvancedModel)
 class AdvancedModelAdmin(admin.ModelAdmin):
     # Additional fields
     # - by relation
@@ -203,6 +185,5 @@ class CompanyAdmin(admin.ModelAdmin):
 
 admin.site.register(Person, PersonAdmin)
 admin.site.register(Company, CompanyAdmin)
-
-
-
+admin.site.register(AdvancedModel, AdvancedModelAdmin)
+admin.site.register(BasicModel, BasicModelAdmin)

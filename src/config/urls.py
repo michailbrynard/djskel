@@ -22,6 +22,6 @@ urlpatterns = patterns('',
     (r'^tinymce/', include('tinymce.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^api/', include('restful_api.urls',  namespace='restful')),
+    url(r'^api/', include('restful_api.urls')),
     
 )+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

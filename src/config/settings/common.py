@@ -60,7 +60,7 @@ EXTENSIONS = (
 )
 
 PROJECT_APPS = (
-    #'basic_demo',
+    'demo_app',
     #'celerey_demo',
     #'restful_demo',
     #'gis_demo',
@@ -99,22 +99,28 @@ DATABASES = {
 # ---------------------------------------------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/topics/i18n/
 
+LANGUAGES = (
+    ('en-za', 'English'),
+    ('af', 'Afrikaans'),
+)
+
 LANGUAGE_CODE = 'en_ZA'
 TIME_ZONE = 'Africa/Johannesburg'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
+FORMAT_MODULE_PATH = 'config.formats'
 
 # Static files
 # ---------------------------------------------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'var/www/static')
+STATIC_ROOT = os.path.join(PROJECT_DIR, 'var/www/static')
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'var/www/media')
+MEDIA_ROOT = os.path.join(PROJECT_DIR, 'var/www/media')
 
 
 # Template files
@@ -133,7 +139,6 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 )
 
 TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'app/config/templates')]
-FORMAT_MODULE_PATH = ['config.formats', ]
 
 # LOGGING
 # ---------------------------------------------------------------------------------------------------------------------

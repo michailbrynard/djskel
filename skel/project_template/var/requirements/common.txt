@@ -12,3 +12,4 @@ djangorestframework
 django-gaurdian
 simplejson
 tablib
+feedparser

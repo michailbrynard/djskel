@@ -1,15 +1,12 @@
 # LOGGING
 # ---------------------------------------------------------------------------------------------------------------------#
 import logging
-log = logging.getLogger(__name__)
-log.setLevel(logging.DEBUG)
-
+logger = logging.getLogger('django')
 
 # IMPORTS
 # ---------------------------------------------------------------------------------------------------------------------#
 # models
 from django.db import models
-
 # contrib.auth
 from django.contrib.auth.models import User, Group, Permission
 # core
@@ -20,6 +17,8 @@ from django.utils import timezone
 from tinymce.models import HTMLField
 
 
+# ABSTRACT MODELS
+# ---------------------------------------------------------------------------------------------------------------------#
 class AbstractBaseModel(models.Model):
     # Quality fields
     created_on = models.DateTimeField(auto_now_add=True)
@@ -32,7 +31,6 @@ class AbstractBaseModel(models.Model):
 
 # BASE MODELS
 # ---------------------------------------------------------------------------------------------------------------------#
-
 class BasicModel(models.Model):
     #id          = models.AutoField(primary=True)
     slug = models.SlugField(max_length=50)
@@ -107,7 +105,6 @@ class BasicModel(models.Model):
 
 # MODELS
 # ---------------------------------------------------------------------------------------------------------------------#
-
 class AdvancedModel(AbstractBaseModel, models.Model):
     description = models.CharField(max_length=45, blank=False)
     fkbasic = models.ForeignKey(BasicModel, null=True, blank=True, verbose_name='Basic Foreignkey Filtered')
@@ -119,8 +116,6 @@ class AdvancedModel(AbstractBaseModel, models.Model):
         return self.description
 
 
-# EXTEND MODELS
-# ---------------------------------------------------------------------------------------------------------------------#
 class ChildModel(BasicModel):
     fkadvanced = models.ForeignKey(AdvancedModel)
     additionalfield = models.CharField(max_length=45, blank=False)

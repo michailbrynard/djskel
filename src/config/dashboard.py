@@ -22,47 +22,45 @@ class CustomIndexDashboard(Dashboard):
         site_name = get_admin_site_name(context)
         
         # append a group for "Administration" & "Applications"
-        self.children.append(modules.Group(
-            _('Group: Administration & Applications'),
-            column=1,
+        # self.children.append(modules.Group(
+        #     _('Applications'),
+        #     column=1,
+        #     collapsible=True,
+        #     children = [
+        #         modules.AppList(
+        #             _('Administration'),
+        #             collapsible=False,
+        #             models=('django.contrib.*',),
+        #         ),
+        #         modules.AppList(
+        #             _('Applications'),
+        #             css_classes=('collapse closed',),
+        #             exclude=('django.contrib.*',),
+        #         )
+        #     ]
+        # ))
+
+        self.children.append(modules.AppList(
+            _('Administration'),
             collapsible=True,
-            children = [
-                modules.AppList(
-                    _('Administration'),
-                    column=1,
-                    collapsible=False,
-                    models=('django.contrib.*',),
-                ),
-                modules.AppList(
-                    _('Applications'),
-                    column=1,
-                    css_classes=('collapse closed',),
-                    exclude=('django.contrib.*',),
-                )
-            ]
+            column=1,
+            css_classes=('collapse closed',),
+            models=('django.contrib.*',)
         ))
-        
+
         # append an app list module for "Applications"
         self.children.append(modules.AppList(
-            _('AppList: Applications'),
+            _('Applications'),
             collapsible=True,
             column=1,
             css_classes=('collapse closed',),
             exclude=('django.contrib.*',),
         ))
-
-        self.children.append(modules.ModelList(
-
-            column=1,
-            models=('app1.models.BasicModel',)
-        ))
-        
-
         
         # append another link list module for "support".
         self.children.append(modules.LinkList(
             _('Django Tools'),
-            column=2,
+            column=1,
             children=[
                 {
                     'title': _('FileBrowser'),
@@ -70,7 +68,7 @@ class CustomIndexDashboard(Dashboard):
                     'external': False,
                 },
                 {
-                    'title': _('API'),
+                    'title': _('RESTFull API'),
                     'url': '/api/',
                     'external': False,
                 },
