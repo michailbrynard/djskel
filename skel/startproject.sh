@@ -21,5 +21,13 @@ echo demo_app >> src/config/apps-enabled.txt
 
 ./src/manage.py createsuperuser
 
+mkdir var/log
+touch var/log/django.log
+touch var/log/nginx-error.log
+touch var/log/nginc-access.log
+
+# Run after spwaning uwsgi emperor
+chown canary:webapps tmp/uwsgi.sock
+
 ./src/manage.py runserver
 
