@@ -21,6 +21,7 @@ urlpatterns = patterns('',
     (r'^admin/filebrowser/', include(site.urls)),
     (r'^grappelli/', include('grappelli.urls')), # grappelli URLS
     (r'^tinymce/', include('tinymce.urls')),
+    (r'^ckeditor/', include('ckeditor.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^api/', include('restful_api.urls')),

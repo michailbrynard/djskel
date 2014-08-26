@@ -10,5 +10,8 @@ django-import-export
 django-tinymce
 djangorestframework
 django-guardian
+django-ckeditor-updated
+#django-wysiwyg
 simplejson
 tablib
+feedparser

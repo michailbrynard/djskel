@@ -13,6 +13,13 @@ __author__ = 'JR Minnaar <jr.minnaar@gmail.com>'
 
 ADMINS = (('JR Minnaar', 'jr.minnaar@gmail.com'), )
 
+
+# LOGGING
+# ---------------------------------------------------------------------------------------------------------------------
+import logging
+logger = logging.getLogger('django')
+
+
 # DIRECTORIES
 # ---------------------------------------------------------------------------------------------------------------------
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -55,6 +62,7 @@ EXTENSIONS = (
     'import_export',
     'reversion',
     'tinymce',
+    'ckeditor',
     'rest_framework',
     'guardian'
 )
@@ -65,6 +73,12 @@ PROJECT_APPS = (
     #'restful_demo',
     #'gis_demo',
 )
+
+try:
+    with open(os.path.join(BASE_DIR, 'config/apps-enabled.txt'), 'r') as f:
+        PROJECT_APPS += tuple(f.read().split('\n')[:-1])
+except IOError:
+    logger.exception('No apps found')
 
 INSTALLED_APPS = CONTRIB + EXTENSIONS + ADMIN_AUTH + PROJECT_APPS
 
@@ -203,5 +217,6 @@ try:
     from config.settings.extensions.grappelli import *
     from config.settings.extensions.rest_framework import *
     from config.settings.extensions.guardian import *
+    from config.settings.extensions.ckeditor import *
 except ImportError:
     pass

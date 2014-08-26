@@ -13,6 +13,13 @@ __author__ = 'JR Minnaar <jr.minnaar@gmail.com>'
 
 ADMINS = (('JR Minnaar', 'jr.minnaar@gmail.com'), )
 
+
+# LOGGING
+# ---------------------------------------------------------------------------------------------------------------------
+import logging
+logger = logging.getLogger('django')
+
+
 # DIRECTORIES
 # ---------------------------------------------------------------------------------------------------------------------
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -25,7 +32,7 @@ PROJECT_DIR = os.path.join(BASE_DIR, '../')
 # See https://docs.djangoproject.com/en/dev/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '8d_xl%)c1y-=kp3lavjfek-q99l)pv-_@7845c)pa=is-oe_6k'
+SECRET_KEY = '8v^$j2g#ugp1fduzd7dpu*9xa+a_^o20_qmwz0)3vfpx_r^pk#'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -55,16 +62,23 @@ EXTENSIONS = (
     'import_export',
     'reversion',
     'tinymce',
+    'ckeditor',
     'rest_framework',
     'guardian'
 )
 
 PROJECT_APPS = (
-    'demo_app',
+    #'basic_demo',
     #'celerey_demo',
     #'restful_demo',
     #'gis_demo',
 )
+
+try:
+    with open(os.path.join(BASE_DIR, 'config/apps-enabled.txt'), 'r') as f:
+        PROJECT_APPS += tuple(f.read().split('\n')[:-1])
+except IOError:
+    logger.exception('No apps found')
 
 INSTALLED_APPS = CONTRIB + EXTENSIONS + ADMIN_AUTH + PROJECT_APPS
 
@@ -138,6 +152,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.messages.context_processors.messages',
 )
 
+
 TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'app/config/templates')]
 
 # LOGGING
@@ -202,5 +217,6 @@ try:
     from config.settings.extensions.grappelli import *
     from config.settings.extensions.rest_framework import *
     from config.settings.extensions.guardian import *
+    from config.settings.extensions.ckeditor import *
 except ImportError:
     pass
