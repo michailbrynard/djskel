@@ -103,10 +103,10 @@ fail (){
             exit_code=$2
         ;;
     esac
-
-    #echo "$SCRIPT_NAME: invalid option -- '$opt'" >&2
-    #echo "Try \`$SCRIPT_NAME --help' for more information." >&2
-
+    
+    echo -e ${FRED}
+    echo -e "Try \`$SCRIPT_NAME --help' for more information." >&2
+    echo -e ${TRST}
     exit ${exit_code}
 }
 
@@ -145,34 +145,6 @@ ask (){
     done
 }
 
-# Usage: show_help [exit_code]
-# Example: show_help 254
-show_help (){
-    cat <<HELP
-    Usage:
-        $0 [OPTION]...
-
-    OPTIONS:
-        --help, -h:    Show this help and exit
-
-    Example:
-        $0 **example**
-
-HELP
-
-    # Fail with general error if status code passed
-    case $1 in
-        ''|*[!0-9]*)
-            exit_code=1
-            ;;
-        *)
-            exit_code=$1
-        ;;
-    esac
-
-    exit ${exit_code}
-}
-
 argument_expected(){
     fail "$1 expected an argument"
 }
@@ -195,29 +167,31 @@ parse_options() {
     
     case "$opt" in
       -p|--python-path)
-        kwarg_set "python_path" "$arg" 1
+          #if echo "$opt" | grep -q "="; then
+          #    python_path="$(echo "$opt" | cut -f2 -d=)"
+          #else
+          #    #i=$(( $i + 1 ))
+          #    python_path="$arg"
+          fi;
+        set_kwarg "python_path" "$arg" 1
         shift
         ;;
       -a|--app-name)
-        kwarg_set "app_name" "$arg" 1
+        set_kwarg "app_name" "$arg" 1
         ;;
       --no-color)
-        kwarg_set "no-color"
+        set_kwarg "no_color"
         ;;
       -h|--help)
         usage
         exit 0
         ;;
       -*)
-        echo "$SCRIPT_NAME: invalid option -- '$opt'" >&2
-        echo "Try \`$SCRIPT_NAME --help' for more information." >&2
-        exit 1
+        fail "$SCRIPT_NAME: invalid option -- '$opt'"
         ;;
       *)
         if [[ ! -z ${SCRIPT_MAX_ARGS} ]] && (( ${#SCRIPT_ARGS[@]} == ${SCRIPT_MAX_ARGS} )); then
-          echo "$SCRIPT_NAME: cannot accept any more arguments -- '$opt'" >&2
-          echo "Try \`$SCRIPT_NAME --help' for more information." >&2
-          exit 1
+          fail "$SCRIPT_NAME: cannot accept any more arguments -- '$opt'" 1
         else
           SCRIPT_ARGS=("${SCRIPT_ARGS[@]}" "$opt")
         fi
@@ -227,60 +201,15 @@ parse_options() {
   done
 }
 
-check_args(){
-    while [ ! -z "$1" ]; do
-        local arg="$1"
-        case "$1" in
-            -h|--help) 
-                local help=0
-                shift
-                ;; 
-            -ex1|--example-one)
-                shift
-
-                if [ -z $1 ] || [[ "$1" == -* ]]; then
-                    argument_expected $arg
-                fi
-
-                example_one=$1
-                shift
-                ;;
-            -ex2|--example-two)
-                # Simple boolean flag–call function here
-                example_two="Two"
-                shift
-                ;;
-            -*)
-                fail "Unknown option $1"
-                shift
-                ;;
-            *)
-                echo "Project name: $1"
-                shift
-                ;;
-        esac
-    done
-
-    if [ ! -z ${help} ]; then
-        show_help ${help}
-    fi
-
-    finally
-
-    exit 0
-}
-
 # SCRIPT TEMPLATE FUNCTIONS
 # ----------------------------------------------------------------------------------------------------------------------
 # Stores options
 # $1 - option name
 # $2 - option value
 # $3 - non-empty if value is not optional
-kwarg_set () {
+set_kwarg () {
   if [[ ! -z "$3" ]] && [[ -z "$2" ]]; then
-    echo "$SCRIPT_NAME: missing option value -- '$opt'" >&2
-    echo "Try \`$SCRIPT_NAME --help' for more information." >&2
-    exit 1
+    fail "$SCRIPT_NAME: missing option value -- '$opt'" 1
   fi
   # XXX should check duplication, but doesn't really matter
   kwargs=("${kwargs[@]}" "$1" "$2")
@@ -294,9 +223,11 @@ get_kwarg () {
     opt="${kwargs[i]}"
     if [[ "$opt" == "$needle" ]]; then
       kwarg_value="${kwargs[i+1]}"
+      #echo "${needle} = ${kwarg_value}"
       return 0
     fi
   done
+  #echo "not found ${needle}"
   kwarg_value=
   return 1
 }
@@ -316,17 +247,37 @@ set_color_variables () {
 # FUNCTIONS
 # ----------------------------------------------------------------------------------------------------------------------
 check_python(){
-    if type python3 2>&-; then
-        echo "Found Python 3:" >&2
-    else
-        echo "Python3 not found, attempting install..." >&2
+
+    if [ "$python_path" = "" ]; then
+        if get_kwarg "python_path"; then
+            python_path=${kwarg_value}
+        else
+            python_path="$(command \which python3)"
+        fi
     fi
+    #python_path=$(type ${kwarg_value} | grep -Po '( /.+)$')
+
+    info "Python: ${python_path}"
+
+    if [ ! -z "${python_path}" ]; then
+        info "Using python path: '${python_path}'"
+    else
+        error "Python3 not found"
+        ask "Do you want to install it?" "Y"
+    fi
+    
 }
 
 create_project(){
-    project_name = ${SCRIPT_ARGS[0]}
-    echo "Creating project '${project_name}'..." >&2
-    command mkproject ${project_name} --system-site-packages
+    project_name=${SCRIPT_ARGS[0]}
+    info "Creating project '${project_name}'..."
+    
+    #mkproject ${project_name} --system-site-packages --python=${python_path}
+    
+    django-admin startproject \
+        --template=skel/project_template \
+        --extension=py --extension=conf --extension=sh --extension=ini \
+        ${project_name}
 
 }
 
@@ -337,18 +288,15 @@ main(){
         usage
     fi
 
-    if ! get_kwarg "no-color"; then
+    parse_options "$@"
+
+    if ! get_kwarg "no_color"; then
       set_color_variables
     fi
 
-    #check_args "$@"
-    parse_options "$@"
-
     check_python
+
     create_project
-
-
-
     
 }
 
