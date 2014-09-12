@@ -172,15 +172,21 @@ parse_options() {
           #else
           #    #i=$(( $i + 1 ))
           #    python_path="$arg"
-          fi;
+          #fi;
         set_kwarg "python_path" "$arg" 1
+        shift
+        ;;
+      -n|--project-name)
+        set_kwarg "project_name" "$arg" 1
         shift
         ;;
       -a|--app-name)
         set_kwarg "app_name" "$arg" 1
+        shift
         ;;
       --no-color)
         set_kwarg "no_color"
+        shift
         ;;
       -h|--help)
         usage
@@ -268,25 +274,87 @@ check_python(){
     
 }
 
+init_virtualenvwrapper(){
+    VIRTUALENVWRAPPER="$(command \which virtualenvwrapper.sh)"
+    if [ "$VIRTUALENVWRAPPER" = "" ]; then
+        ask "Install virtualenv wrapper?" "Y"
+    fi
+
+    export PROJECT_HOME=/home/canary/Projects
+    export WORKON_HOME=/home/canary/Virtualenvs
+    export VIRTUALENVWRAPPER_PYTHON=${python_path}
+    source $VIRTUALENVWRAPPER
+}
+
+
+delete_project(){
+    get_kwarg "project_name"; project_name=${kwarg_value}
+    if [ -z ${project_name} ]; then fail "Please specify project name"; fi
+    info "Deleting project '${project_name}'..."
+
+    init_virtualenvwrapper
+
+    rmvirtualenv ${project_name}
+    rm -R ${PROJECT_HOME}/${project_name}/
+}
+
 create_project(){
-    project_name=${SCRIPT_ARGS[0]}
+    get_kwarg "project_name"; project_name=${kwarg_value}
+    if [ -z ${project_name} ]; then fail "Please specify project name"; fi
+
     info "Creating project '${project_name}'..."
-    
-    #mkproject ${project_name} --system-site-packages --python=${python_path}
-    git clone ssh://ocean_git/~/djskel skel
+
+    init_virtualenvwrapper
+
+    if ! mkproject --system-site-packages --python=${python_path}  ${project_name}; then
+        workon ${project_name}
+    fi
+
+    if [ ! -d ".skel" ]; then
+        git clone ssh://ocean_git/~/djskel .skel
+        info "Cloned .skel folder"
+    else
+        cd .skel
+        git pull
+        cd ../
+        info "Updated .skel folder"
+    fi
+
+    pip3 install django
 
     django-admin startproject \
-        --template=skel/project_template \
+        --template=.skel/project_template \
         --extension=py --extension=conf --extension=sh --extension=ini \
         ${project_name}
 
+        mv ${project_name}/* ./
+        mv ${project_name}/.gitignore ./
+        rm -R ${project_name}
+
+        chmod +x src/manage.py
+
+        pip install -U -r var/requirements/development.txt
+
+        mkdir -p tmp
+        mkdir -p var/log
+        touch src/config/apps-enabled.txt
+        touch var/log/django.log
+        touch var/log/nginx-error.log
+        touch var/log/nginc-access.log
+
+        ./src/manage.py syncdb
+
 }
+
+
 
 # MAIN
 # ----------------------------------------------------------------------------------------------------------------------
 main(){
     if [ -z $1 ]; then
         usage
+        exit 0        
+        #fail "You must specify at least a project name"
     fi
 
     parse_options "$@"
@@ -296,9 +364,22 @@ main(){
     fi
 
     check_python
+    script_command=${SCRIPT_ARGS[0]}
 
-    create_project
-    
+
+    case "${script_command}" in
+      create)
+        create_project
+        ;;
+      delete)
+        delete_project
+        ;;
+
+      *)
+        fail "Unrecognised command" 1
+        ;;
+    esac
+
 }
 
 main "$@"
