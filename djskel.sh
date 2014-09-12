@@ -44,14 +44,15 @@ kwargs=()
 # For returning value after calling get_kwarg
 kwarg_value=
 
-normal=$(tput sgr0)
-bold=$(tput bold)
-red=$(tput setaf 1)
-green=$(tput setaf 2)
-yellow=$(tput setaf 3)
-blue=$(tput setaf 4)
-magenta=$(tput setaf 5)
-cyan=$(tput setaf 6)
+#Alternative colour settings
+t_normal=$(tput sgr0)
+t_bold=$(tput bold)
+f_red=$(tput setaf 1)
+f_green=$(tput setaf 2)
+f_yellow=$(tput setaf 3)
+f_blue=$(tput setaf 4)
+f_magenta=$(tput setaf 5)
+f_cyan=$(tput setaf 6)
 
 
 # BOILERPLATE FUNCTIONS
@@ -73,21 +74,21 @@ EXAMPLES:
 # Example: info "It's Working"
 # Output (to STDOUT): [...] It's Working
 info (){
-    printf "%b" "[${green}...${normal}] $1\n"
+    printf "%b" "[${f_green}...${t_normal}] $1\n"
 }
 
 # Usage: prompt "question"
 # Example: prompt "What's Your Name?"
 # Output (to STDOUT): [ ? ] What's Your Name?  
 prompt (){
-    printf "%b" "[${yellow} ? ${normal}] $1 "
+    printf "%b" "[${f_yellow} ? ${t_normal}] $1 "
 }
 
 # Usage: error ["message"]
 # Example: error "You're Ugly"
 # Output (to STDERR): [ERROR] /script/name: You're Ugly
 error (){
-    printf "%b" "[${red}ERROR${normal}] ${0}: ${1:-'Unkown Error'}\n" >&2
+    printf "%b" "[${f_red}ERROR${t_normal}] ${0}: ${1:-'Unkown Error'}\n" >&2
 }
 
 # Usage: fail "message" [exit_code]
@@ -104,9 +105,9 @@ fail (){
         ;;
     esac
     
-    echo -e ${FRED}
+    echo -e ${f_red}
     echo -e "Try \`$SCRIPT_NAME --help' for more information." >&2
-    echo -e ${TRST}
+    echo -e ${t_normal}
     exit ${exit_code}
 }
 
@@ -239,12 +240,12 @@ get_kwarg () {
 }
 
 set_color_variables () {
-  local COLORS=(BLK RED GRN YLW BLU MAG CYN WHT)
-  local i SGRS=(RST BLD ___ ITA ___ BLK ___ INV)
+  local COLORS=(black red green yellow blue magenta cyan white)
+  local i SGRS=(normal bold ___ italic ___ black ___ invert)
   for (( i=0; i<8; i++ )); do
-    eval "F${COLORS[i]}=\"\e[3${i}m\""
-    eval "B${COLORS[i]}=\"\e[4${i}m\""
-    eval   "T${SGRS[i]}=\"\e[${i}m\""
+    eval "f_${COLORS[i]}=\"\e[3${i}m\""
+    eval "b_${COLORS[i]}=\"\e[4${i}m\""
+    eval   "t_${SGRS[i]}=\"\e[${i}m\""
   done
 }
 
@@ -295,7 +296,7 @@ delete_project(){
     init_virtualenvwrapper
 
     rmvirtualenv ${project_name}
-    rm -R ${PROJECT_HOME}/${project_name}/
+    rm -Rf ${PROJECT_HOME}/${project_name}/ 
 }
 
 create_project(){
@@ -327,26 +328,69 @@ create_project(){
         --extension=py --extension=conf --extension=sh --extension=ini \
         ${project_name}
 
-        mv ${project_name}/* ./
-        mv ${project_name}/.gitignore ./
-        rm -R ${project_name}
+    mv ${project_name}/* ./
+    mv ${project_name}/.gitignore ./
+    rm -R ${project_name}
 
-        chmod +x src/manage.py
+    chmod +x src/manage.py
 
-        pip install -U -r var/requirements/development.txt
+    #pip install -U -r var/requirements/development.txt
+    pip install -r var/requirements/development.txt
 
-        mkdir -p tmp
-        mkdir -p var/log
-        touch src/config/apps-enabled.txt
-        touch var/log/django.log
-        touch var/log/nginx-error.log
-        touch var/log/nginc-access.log
+    mkdir -p tmp var/log var/www/media/uploads
 
-        ./src/manage.py syncdb
+    touch \
+      src/config/apps-enabled.txt \
+      var/log/django.log \
+      var/log/nginx-error.log \
+      var/log/nginc-access.log
+
+    ./src/manage.py syncdb
+
+    ./src/manage.py createsuperuser
+
+    #Check if app name is specified as well
+    get_kwarg "app_name"; app_name=${kwarg_value}
+    if [ ! -z ${app_name} ]; then create_app; fi
+
+    git init
+    git add -A
+    git commit -a -m "Skeleton app added from djskel"
+
+    ssh -t ocean_ssh "sudo /srv/data/git/git-shell-commands/create ${project_name}"
+    
+    git remote add origin ssh://ocean_git/~/${project_name}
+    git push --set-upstream origin master
+
+    chown canary:webapps tmp/uwsgi.sock
 
 }
 
+create_app(){
+    #Get project name
+    get_kwarg "project_name"; project_name=${kwarg_value}
+    if [ -z ${project_name} ]; then fail "Please specify project name"; fi
+    
+    #Get app name
+    get_kwarg "app_name"; app_name=${kwarg_value}
+    if [ -z ${app_name} ]; then fail "Please specify app name"; fi
 
+    #Init virtualenvwrapper and test if project exists
+    init_virtualenvwrapper
+    if ! workon ${project_name}; then fail "First create project!"; fi
+
+    if grep ${app_name} src/config/apps-enabled.txt; then
+        fail "App name already registered" 1
+    fi
+
+    info "Adding app to project '${project_name}'..."
+    ./src/manage.py startapp --template=.skel/app_template --extension=py ${app_name}
+    mv ${app_name} src/
+    echo ${app_name} >> src/config/apps-enabled.txt
+    ./src/manage.py makemigrations ${app_name}
+    ./src/manage.py migrate ${app_name}
+
+}
 
 # MAIN
 # ----------------------------------------------------------------------------------------------------------------------
@@ -374,7 +418,9 @@ main(){
       delete)
         delete_project
         ;;
-
+      create_app)
+        create_app
+        ;;
       *)
         fail "Unrecognised command" 1
         ;;
