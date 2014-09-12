@@ -273,7 +273,8 @@ create_project(){
     info "Creating project '${project_name}'..."
     
     #mkproject ${project_name} --system-site-packages --python=${python_path}
-    
+    git clone ssh://ocean_git/~/djskel skel
+
     django-admin startproject \
         --template=skel/project_template \
         --extension=py --extension=conf --extension=sh --extension=ini \
