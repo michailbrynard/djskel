@@ -1,0 +1,60 @@
+[
+{
+  "model": "auth.user",
+  "fields": {
+    "is_staff": false,
+    "last_login": "2015-01-18T13:35:36.977Z",
+    "password": "",
+    "is_superuser": false,
+    "email": "",
+    "last_name": "",
+    "user_permissions": [],
+    "groups": [],
+    "username": "AnonymousUser",
+    "is_active": true,
+    "first_name": "",
+    "date_joined": "2015-01-18T13:35:36.977Z"
+  },
+  "pk": -1
+},
+{
+  "model": "auth.user",
+  "fields": {
+    "is_staff": true,
+    "last_login": "2015-01-20T14:49:02.287Z",
+    "password": "pbkdf2_sha256$12000$zNuixD5mSqx8$VyS9EOhBjSN6HNM2/Wwh6BZqBvpMkJE02pBpoNgcqxY=",
+    "is_superuser": true,
+    "email": "jr.minnaar@gmail.com",
+    "last_name": "",
+    "user_permissions": [],
+    "groups": [],
+    "username": "Admin",
+    "is_active": true,
+    "first_name": "",
+    "date_joined": "2015-01-18T13:36:06.104Z"
+  },
+  "pk": 1
+},
+{
+  "model": "auth.user",
+  "fields": {
+    "is_staff": true,
+    "last_login": "2015-01-20T14:46:17.365Z",
+    "password": "pbkdf2_sha256$12000$ctxaEpkBGYqm$JtXM6dyOsQTmYdJu9RgRnsds7sbR3HqNrCc94QH2Q/s=",
+    "is_superuser": false,
+    "email": "jburchell@gsma.com",
+    "last_name": "Burchell",
+    "user_permissions": [],
+    "groups": [
+      [
+        "GSMA"
+      ]
+    ],
+    "username": "Julia",
+    "is_active": true,
+    "first_name": "Julia",
+    "date_joined": "2015-01-20T14:45:34Z"
+  },
+  "pk": 2
+}
+]

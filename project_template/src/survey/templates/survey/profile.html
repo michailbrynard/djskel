@@ -1,0 +1,32 @@
+{% if form %}
+    {% load bootstrap3 %}
+    {% bootstrap_messages %}
+
+    <form id="profile_form" class="form-horizontal" action="{% url 'survey:update_profile' %}?tab=0" method="post"
+          role="form">
+
+        {% csrf_token %}
+
+        <h3>Please provide the following details:</h3><hr/>
+
+        {% bootstrap_field form.name layout="horizontal" %}
+        {% bootstrap_field form.gender layout="horizontal" %}
+        {% bootstrap_field form.company_name layout="horizontal" %}
+        {% bootstrap_field form.job_title layout="horizontal" %}
+        {% bootstrap_field form.country_of_operation layout="horizontal" %}
+        {% bootstrap_field form.email_address layout="horizontal" %}
+        {% bootstrap_field form.phone_number layout="horizontal" %}
+
+{#        <h3>Role in organization:</h3><hr/>#}
+
+        {% bootstrap_field form.country_or_region layout="" %}
+        {% bootstrap_field form.countries layout="" %}
+        {% bootstrap_field form.vas_parties layout="" %}
+        {% bootstrap_field form.service_pitches layout="" %}
+
+        {% buttons %}
+        <br/><button class="btn btn-lg btn-primary" type="submit">Submit section</button>
+        {% endbuttons %}
+
+    </form>
+{% endif %}

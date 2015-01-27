@@ -99,12 +99,12 @@ class CustomIndexDashboard(Dashboard):
         ))
         
         # append a feed module
-        self.children.append(modules.Feed(
-            _('Latest Django News'),
-            column=2,
-            feed_url='http://www.djangoproject.com/rss/weblog/',
-            limit=5
-        ))
+        # self.children.append(modules.Feed(
+        #     _('Latest Django News'),
+        #     column=2,
+        #     feed_url='http://www.djangoproject.com/rss/weblog/',
+        #     limit=5
+        # ))
         
         # append a recent actions module
         self.children.append(modules.RecentActions(

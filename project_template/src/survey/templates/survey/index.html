@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Bootstrap, from Twitter</title>
+
+    <link href="/static/survey/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/survey/bower_components/select2/dist/css/select2.min.css" rel="stylesheet">
+    <link href="/static/survey/css/style.css" rel="stylesheet">
+
+
+</head>
+<body>
+<!-- Fixed navbar -->
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">
+                Hello
+            </a>
+            <!--<a class="navbar-brand" href="#">GSMA Mobile for Development</a>-->
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">This is quite something!!</a></li>
+            </ul>
+        </div>
+        <!--/.nav-collapse -->
+    </div>
+</nav>
+
+<div class="container">
+    <h1>Bootstrap starter template</h1>
+
+    <p>Use this document as a way to quick start any new project</p>
+
+    <!-- Button to trigger modal -->
+    <a href="#myModal" role="button" class="btn" data-toggle="modal" id="myModalButton" style="display: none;">Launch
+        demo modal</a>
+
+
+
+
+    <form role="form" class="form form-vertical">
+        <div class="form-group">
+
+            <label for="countries">This lable</label>
+            <select id="countries" name="countries" class="form-control">
+                <option value="1">South Africa</option>
+                <option value="2">North Africa</option>
+                <option value="3">West Africa</option>
+                <option value="999">Top</option>
+            </select>
+
+        </div>
+
+
+        <input type="submit"/>
+
+
+    </form>
+
+</div>
+<!-- /container -->
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">New message</h4>
+            </div>
+            <div class="modal-body">
+                New so text
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Send message</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script data-main="/static/survey/js/main" src="/static/survey/bower_components/requirejs/require.js"></script>
+</body>
+</html>

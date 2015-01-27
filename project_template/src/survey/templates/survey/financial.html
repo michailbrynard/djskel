@@ -1,0 +1,60 @@
+{% if form %}
+    {% load bootstrap3 %}
+    {% bootstrap_messages %}
+
+    <form id="financial_form" class="form" action="{% url 'survey:update_financial' %}?tab=2" method="post" role="form">
+        {% csrf_token %}
+
+        {#        {% bootstrap_form form %}#}
+
+        {% bootstrap_field form.investments layout="" %}
+        <div class="well clearfix anti-well">
+            {% bootstrap_field form.currency layout="" %}
+            <div class="row">{% bootstrap_field form.revenue_mar_14 layout="horizontal" %}</div>
+            <div class="row">{% bootstrap_field form.revenue_jun_14 layout="horizontal" %}</div>
+            <div class="row">{% bootstrap_field form.revenue_sep_14 layout="horizontal" %}</div>
+            <div class="row">{% bootstrap_field form.revenue_dec_14 layout="horizontal" %}</div>
+        </div>
+
+        {#        <div id="other_revenue_stream_container" class="well anti-well clearfix other">#}
+        {#            {% bootstrap_field form.revenue_streams layout="" %}#}
+        {#            <input id="other_revenue_stream" placeholder="Other (please specify...)" type="text"/>#}
+        {#            <a id="other_revenue_stream_button" class="btn btn-default btn-xs" href="#other-revenue">Add</a>#}
+        {#        </div>#}
+
+        <p>Q3. Which three VAS generate the highest revenues for your company?
+
+        <div class="row clearfix"
+             style="margin-bottom: 10px;">{% bootstrap_field form.revenue_stream_1 layout="horizontal" %}</div>
+        <div class="row clearfix"
+             style="margin-bottom: 10px;">{% bootstrap_field form.revenue_stream_2 layout="horizontal" %}</div>
+        <div class="row clearfix"
+             style="margin-bottom: 10px;">{% bootstrap_field form.revenue_stream_3 layout="horizontal" %}</div>
+
+        <span class="help-block">Use the textbox below to add another option to the dropdowns.</span>
+
+        <div id="other_revenue_stream_container" class="well anti-well clearfix other">
+            <input id="other_revenue_stream" placeholder="Other (please specify...)" type="text"/>
+            <a id="other_revenue_stream_button" class="btn btn-default btn-xs" href="#other-revenue">Add</a>
+        </div>
+
+        <br/>
+
+        {% bootstrap_field form.vas_revenue_share layout="" %}
+
+        <div id="other_revenue_stream_container" class="well anti-well clearfix other">
+            {% bootstrap_field form.acceptable_roi_wait layout="" %}
+
+            <input id="other_roi_period" placeholder="Other (please specify...)" type="text"/>
+            <a id="other_roi_period_button" class="btn btn-default btn-xs" href="#other-period">Add</a>
+        </div>
+
+        {% bootstrap_field form.acceptable_roi_percentage layout="" %}
+
+        {% buttons %}
+            <br/>
+            <button class="btn btn-lg btn-primary" type="submit">Submit section</button>
+        {% endbuttons %}
+    </form>
+
+{% endif %}

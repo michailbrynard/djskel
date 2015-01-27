@@ -68,10 +68,10 @@ EXTENSIONS = (
 )
 
 PROJECT_APPS = (
-    #'basic_demo',
-    #'celerey_demo',
-    #'restful_demo',
-    #'gis_demo',
+    # 'basic_demo',
+    # 'celerey_demo',
+    # 'restful_demo',
+    # 'gis_demo',
 )
 
 try:
@@ -102,12 +102,12 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # ---------------------------------------------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/{{ docs_version }}/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
 
 # Internationalization
 # ---------------------------------------------------------------------------------------------------------------------

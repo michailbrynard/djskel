@@ -1,0 +1,12 @@
+{% if form %}
+    {% load bootstrap3 %}
+    {% bootstrap_messages %}
+
+    <form method="POST" class="form" role="form" id="provider-form">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        {#{{ form }}#}
+        <div id="results"></div>
+        <button class="btn btn-primary" type="submit">Add Trusted VAS Vendor</button>
+    </form>
+{% endif %}
