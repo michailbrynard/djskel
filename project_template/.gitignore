@@ -16,3 +16,6 @@ tmp/*
 .idea/tasks.xml
 .ipynb_checkpoints
 .skel
+
+bower_components
+node_packages
