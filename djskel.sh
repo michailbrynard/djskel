@@ -343,7 +343,7 @@ create_project(){
       src/config/apps-enabled.txt \
       var/log/django.log \
       var/log/nginx-error.log \
-      var/log/nginc-access.log
+      var/log/nginx-access.log
 
     ./src/manage.py syncdb
 

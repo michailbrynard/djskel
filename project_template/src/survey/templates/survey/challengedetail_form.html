@@ -1,0 +1,69 @@
+{#{% extends "survey/base.html" %}#}
+{##}
+{#{% block content %}#}
+{#action="{% url 'survey:provider_update' form.id.value %}"#}
+
+
+{% if form %}
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title" id="challengeDetailModalLabel">
+            {% if object %}
+                Update challenge details
+            {% else %}
+                Add challenge details
+            {% endif %}
+        </h4>
+    </div>
+
+    {% if object %}
+        <form method="POST" class="form" action="{% url 'survey:challenge_detail_update' object.rank %}" role="form"
+              id="provider_form">
+    {% else %}
+        <form method="POST" class="form" action="{% url 'survey:challenge_detail_add' %}" role="form"
+              id="provider_form">
+    {% endif %}
+
+{% csrf_token %}
+<div class="modal-body">
+
+    {% load bootstrap3 %}
+    {% bootstrap_messages %}
+
+{#    {% bootstrap_form form %}#}
+
+    {% bootstrap_field form.challenge %}
+
+
+        <div id="other_attempted_services_container" class="well clearfix other anti-well">
+        {% bootstrap_field form.attempted_services %}
+        <input id="other_attempted_services" placeholder="Other (please specify...)" type="text"/>
+        <a id="other_attempted_services_button" class="btn btn-default btn-xs" href="#other-attemtped">Add</a>
+    </div>
+
+    {% bootstrap_field form.country_or_region %}
+    {% bootstrap_field form.year %}
+    {% bootstrap_field form.challenge_details %}
+    {% bootstrap_field form.solution_details %}
+
+
+
+
+</div>
+
+<div class="modal-footer">
+    {% buttons %}
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        {% if object %}
+            <button type="submit" class="btn btn-primary">Update challenge details</button>
+        {% else %}
+            <button type="submit" class="btn btn-primary">Add challenge details</button>
+        {% endif %}
+    {% endbuttons %}
+</div>
+
+</form>
+{% endif %}

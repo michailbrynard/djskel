@@ -1,0 +1,235 @@
+{% extends "survey/base.html" %}
+
+{% block content %}
+
+    <div class="container">
+
+        <div role="tabpanel">
+
+            <!-- Nav tabs -->
+            <ul id="section_tabs" class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#0" aria-controls="0" role="tab" data-toggle="tab">
+                    Basic Information</a></li>
+                <li role="presentation"><a href="#1" aria-controls="1" role="tab" data-toggle="tab">
+                    Trusted VAS Vendors</a></li>
+                <li role="presentation"><a href="#2" aria-controls="2" role="tab" data-toggle="tab">
+                    VAS Revenue and Investments</a></li>
+                <li role="presentation"><a href="#3" aria-controls="3" role="tab" data-toggle="tab">
+                    Challenges</a></li>
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content">
+
+                <div role="tabpanel" class="tab-pane active" id="0">
+                    {% include "survey/profile.html" with form=profile_form %}
+                    <hr style="margin-bottom: 50px;"/>
+                </div>
+
+                <div role="tabpanel" class="tab-pane" id="1">
+                    <h3>Please give brief information about your trusted VAS vendors below,
+                        listing your top 10.</h3>
+                    <hr/>
+
+                    <p>You and your peers have told us you are keen to understand who are the trusted vendors in VAS
+                        and especially in M4D VAS.</p>
+
+                    <p>
+                        By VAS vendors we mean any third party organisation or supplier with whom you work to create,
+                        integrate,
+                        launch and maintain VAS. Third party vendors/content/service providers may refer to themselves,
+                        or be referred to,
+                        by many different terms. We aim to capture as many of those
+                        <a href="#"
+                           id="organisation-description"
+                           tabindex="0" role="button"
+                           data-toggle="popover"
+                           data-trigger="focus"
+                           title="Organisations"
+                           data-content="These organisations may include or be classed as: commercial VAS providers,
+                           social VAS providers, third party VAS vendors, application developers and providers,
+                           mobile media and entertainment providers, transport service providers,
+                           utilities service providers, mHealth service providers etc.">organisations</a>, commercial or
+                        non-profit, that offer either
+                        white label services or content, technical integration/systems, marketing, customer care etc to
+                        support mobile operators’
+                        VAS offerings. Please add those with whom you regularly work and whom you trust and value.
+                    </p>
+
+                    <p>The table below displays a summary of the trusted VAS vendors you already added.
+                        Click the button below and fill out the form to add another trusted VAS vendor.</p>
+
+                    <a class="btn btn-default" data-toggle="modal"
+                       href="{% url "survey:provider_add" %}"
+                       data-target="#providerAddModal" title="Add">Add trusted VAS vendor</a>
+                    <hr/>
+
+                    <div class="jumbotron">
+
+                        <!-- The feed -->
+                        <table class="table table-hover" id="provider">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Company Name</th>
+                                <th>Contact Name</th>
+                                <th>Contact Email</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for provider in providers %}
+                                <tr id="provider-{{ provider.id }}">
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>{{ provider.company_name }}</td>
+                                    <td>{{ provider.contact_name }}</td>
+                                    <td><a href="mailto:{{ provider.contact_email }}">{{ provider.contact_email }}</a>
+                                    </td>
+                                    <td>
+
+                                        <a class="btn btn-sm btn-primary" data-toggle="modal"
+                                           href="{% url "survey:provider_update" provider.id %}"
+                                           data-target="#providerAddModal" title="Edit" data-tooltip>Edit</a>
+
+                                        <a id='delete-provider-{{ provider.id }}' class="btn btn-sm btn-primary"
+                                           title="Delete"
+                                           data-tooltip>Delete</a>
+                                    </td>
+                                </tr>
+                            {% empty %}
+                                <tr>
+                                    <td></td>
+                                    <td>Please click "Add trusted VAS vendor" button to add vendors.</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+
+
+                    </div>
+
+                    <hr style="margin-bottom: 50px;"/>
+                    <button id="provider-submit" class="btn btn-primary btn-lg">Submit section</button>
+                    <hr style="margin-bottom: 50px;"/>
+                </div>
+
+                <div role="tabpanel" class="tab-pane" id="2">
+                    <h3>Please provide the following details:</h3>
+                    <hr/>
+                    {% include "survey/financial.html" with form=financial_form %}
+
+                    <hr style="margin-bottom: 50px;"/>
+
+                </div>
+
+                <div role="tabpanel" class="tab-pane" id="3">
+                    <h3>What challenges have you met in trying to implement M4D VAS services in your
+                        company?</h3>
+                    <hr/>
+                    {% include "survey/challenge.html" with form=challenge_form %}
+
+                    <hr style="margin-bottom: 50px;"/>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="challengeDetailModal" class="modal fade " role="dialog" tabindex="-1"
+         aria-labelledby="challengeDetailModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="challengeDetailModalLabel">Challenge Details</h4>
+                </div>
+                <div class="modal-body">
+                    {#                    {% include "survey/challenge_detail.html" with form=challenge_detail_form %}#}
+                    {#% include "survey/challenge_detail.html" with form=challenge_detail_form %}#}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="providerAddModal" class="modal fade " role="dialog" tabindex="-1"
+         aria-labelledby="providerAddModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="providerAddModalLabel">Challenge Details</h4>
+                </div>
+                <div class="modal-body">
+                    {#% include "survey/challenge_detail.html" with form=challenge_detail_form %}#}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="success" class="modal fade " role="dialog" tabindex="-1"
+         aria-labelledby="successLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="successLabel">Section saved!</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Please use the tabs at the top of the page to navigate to the next section.</p>
+                    <p>You can also click on the logo to go back to the survey overview.</p>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+
+
+<!--    Q1. Please provide the following details
+
+[To be completed as far as possible by M4D Impact team given contacts already known]
+
+Name:
+Company:
+Job title:
+Country of operation:
+Email address:
+Phone number:
+Gender:
+
+Q2. Is your job focussed on a single country or across a region?
+a. Is your position in the group or the country level? (Please tick)
+Group
+Country
+b. Do you have responsibility for one country or more? Please list countries here:
+
+Q3. In each country you cover in your personal remit, approximately how many third party VAS suppliers, aggregators, content providers etc does your company work with to offer VAS to your customers?
+
+    0 – all in house
+    1-10
+    11-20
+    21-30
+31-40
+40+-->
