@@ -1,0 +1,29 @@
+{% extends "survey/base.html" %}
+
+{% block content %}
+
+    {% if request.user.is_staff %}
+        <div class="alert alert-info alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                    aria-hidden="true">&times;</span></button>
+            <strong>Please note:</strong> You are viewing this survey as staff user "{{ request.user.username }}".
+            You are able to make changes and save them on behalf of the respondent.
+            Click <a href="/admin/survey/survey/">here</a> to go back to the list of surveys.
+        </div>
+    {% endif %}
+
+
+    <div class="container">
+        <div class="jumbotron">
+            <h2>Thank you!</h2>
+            <p>Your data has been saved and you can safely leave this page.
+                If you want to return to this survey at a later stage, please use your
+            unique link:</p>
+            <a href="{% url 'survey:login' slug=request.session.survey_slug %}">http://m4dimpactsurvey.com{% url 'survey:login' slug=request.session.survey_slug %}</a>
+
+        </div>
+    </div>
+
+
+
+{% endblock %}

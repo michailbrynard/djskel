@@ -2,136 +2,70 @@
     {% load bootstrap3 %}
     {% bootstrap_messages %}
 
+    <br>
     <form id="challenge_form" class="form" action="{% url 'survey:update_challenge' %}?tab=2" method="post" role="form">
         {% csrf_token %}
 
-        <div id="other_challenge_container" class="well clearfix anti-well other">
+        <div id="other_challenge_container" class="well anti-well clearfix other">
             {% bootstrap_field form.challenges layout="" %}
-            <input id="other_challenge" placeholder="Other (please specify...)" type="text"/>
-            <a id="other_challenge_button" class="btn btn-default btn-xs" href="#other-challenge">Add</a>
+            <div class="row">
+                <div class="col-xs-4">
+                    <div class="input-group">
+                        <input id="other_challenge" type="text" class="form-control"
+                               placeholder="Other (please specify...)"/>
+                      <span class="input-group-btn">
+                        <button id="other_challenge_button" class="btn btn-default" type="button">Add</button>
+                      </span>
+                    </div>
+                    <!-- /input-group -->
+                </div>
+            </div>
         </div>
 
         <br/>
 
         <h3>Challenge Details</h3>
         <hr/>
-        <p> Now we understand the range of challenges you encounter from the list above, please rank the top three
-            biggest
-            challenges you face out of this list.
-            Please elaborate on these challenges in the context of the M4D service you were trying to implement when you
-            faced
-            them by clicking on the "Update details" button.
-        </p>
         <br/>
 
-        <table class="table table-hover">
-            {% for challenge in form.instance.challengedetail_set.all %}
+        <div class="row">
+            <div class="col-sm-12 col-md-8 col-lg-8">
+
+            <table id="challenge-table" class="table table-hover">
+                <thead>
                 <tr>
-                    <td>{{ challenge.get_name }}</td>
-                    <td>{% if challenge.challenge.name %}
-                        {{ challenge.challenge.name }}
-                    {% else %}
-                        Not updated yet.
-                    {% endif %}
-                    </td>
-                    <td>
-                        <a id="update_biggest_challenge_{{ forloop.counter }}" class="btn btn-sm btn-primary"
-                           data-toggle="modal"
-                           href="{% url "survey:challenge_detail_update" forloop.counter %}"
-                           data-target="#challengeDetailModal" title="Update" data-tooltip>Update details</a>
-                    </td>
+                    <th></th>
+                    <th>Rank</th>
+                    <th>Description</th>
+                    <th></th>
                 </tr>
-            {% endfor %}
-        </table>
+                </thead>
+                {% for challenge in form.instance.challengedetail_set.all %}
+                    <tr id="{{ forloop.counter }}">
+                        <td class="drag-handle"></td>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{% if challenge.challenge.name %}
+                            {{ challenge.challenge.name }}
+                        {% else %}
+                            Not updated yet.
+                        {% endif %}
+                        </td>
+                        <td style="text-align: right">
+                            <a id="update_biggest_challenge_{{ forloop.counter }}" class="btn btn-sm btn-primary"
+                               data-toggle="modal"
+                               href="{% url "survey:challenge_detail_update" forloop.counter %}"
+                               data-target="#challengeDetailModal" title="Update" data-tooltip>Update details</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+        </div>
 
         {% buttons %}
             <br/>
-            <button class="btn btn-lg btn-primary" type="submit">Submit section</button>
+            <button name="continue" class="btn btn-lg btn-primary" type="submit">Save & continue</button>
+            <button name="close" class="btn btn-lg btn-primary" type="submit">Save & close</button>
         {% endbuttons %}
     </form>
-
-
 {% endif %}
-
-{##}
-{##}
-{#{% if form %}#}
-{#    {% load bootstrap3 %}#}
-{#    {% bootstrap_messages %}#}
-{##}
-{#    <form id="challenge_form" class="form" action="{% url 'survey:update_challenge' %}?tab=3" method="post" role="form">#}
-{#        {% csrf_token %}#}
-{##}
-{#    <div id="challenges_options" class="form-group">#}
-{#    <p>{{ form.challenges.label }}</p>#}
-{#        {% for value, text in form.challenges.field.choices %}#}
-{#            <div class="checkbox">#}
-{#                <label>#}
-{#                    <input name="challenges" type="checkbox" value="{{ value }}">#}
-{#                    {{ text }}#}
-{#                </label>#}
-{#            </div>#}
-{#        {% endfor %}#}
-{#    </div>#}
-{#    {%  bootstrap_form form %}#}
-{##}
-{#        <div id="other_challenge_container" class="well clearfix anti-well other">#}
-{#            {% bootstrap_field form.challenges layout="" %}#}
-{#            <input id="other_challenge" placeholder="Other (please specify...)" type="text"/>#}
-{#            <a id="other_challenge_button" class="btn btn-default btn-xs" href="#other-challenge">Add</a>#}
-{#        </div>#}
-{##}
-{#        <br/>#}
-{#        <h3>Challenge Details</h3>#}
-{#        <hr/>#}
-{#        <p> Now we understand the range of challenges you encounter from the list above, please rank the top three#}
-{#            biggest#}
-{#            challenges you face out of this list.#}
-{#            Please elaborate on these challenges in the context of the M4D service you were trying to implement when you#}
-{#            faced#}
-{#            them by clicking on the "Update details" button.#}
-{#        </p>#}
-{#        <br/>#}
-{##}
-{#        <table class="table table-hover">#}
-{#            <tr>#}
-{#                <td>1st Biggest Challenge</td>#}
-{#                <td>#}
-{#                    {% bootstrap_field form.biggest_challenge_1 layout="" %}#}
-{#                    {{ form.biggest_challenge_1 }}#}
-{#                </td>#}
-{#                <td><a id="update_biggest_challenge_1" class="btn btn-sm btn-primary"#}
-{#                       data-toggle="modal"#}
-{#                       href="{% url "survey:challenge_detail_update" 1 %}"#}
-{#                       data-target="#challengeDetailModal" title="Update" data-tooltip>Update details</a></td>#}
-{#            </tr>#}
-{#            <tr>#}
-{#                <td>2nd Biggest Challenge</td>#}
-{#                <td>#}
-{#                    {{ form.biggest_challenge_2 }}#}
-{#                </td>#}
-{#                <td><a id="update_biggest_challenge_2" class="btn btn-sm btn-primary"#}
-{#                       data-toggle="modal"#}
-{#                       href="{% url "survey:challenge_detail_update" 2 %}"#}
-{#                       data-target="#challengeDetailModal" title="Update" data-tooltip>Update details</a></td>#}
-{#            </tr>#}
-{#            <tr>#}
-{#                <td>3rd Biggest Challenge</td>#}
-{#                <td>#}
-{#                    {{ form.biggest_challenge_3 }}#}
-{#                    </td>#}
-{#                <td><a id="update_biggest_challenge_3" class="btn btn-sm btn-primary"#}
-{#                       data-toggle="modal"#}
-{#                       href="{% url "survey:challenge_detail_update" 3 %}"#}
-{#                       data-target="#challengeDetailModal" title="Update" data-tooltip>Update details</a></td>#}
-{#            </tr>#}
-{#        </table>#}
-{#        {% buttons %}#}
-{#            <br/>#}
-{#            <button class="btn btn-lg btn-primary" type="submit">Submit section</button>#}
-{#        {% endbuttons %}#}
-{##}
-{#    </form>#}
-{##}
-{#{% endif %}#}
-

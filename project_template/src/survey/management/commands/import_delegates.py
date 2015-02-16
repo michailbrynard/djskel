@@ -29,7 +29,7 @@ def slug_generator(size=15, characters=string.ascii_letters + string.digits):
     :return:
     """
     # str(uuid.uuid4().hex[0:15])
-    slug = 'X_' + ''.join(random.choice(characters) for _ in range(size))
+    slug = ''.join(random.choice(characters) for _ in range(size))
     return slug
 
 
@@ -42,12 +42,13 @@ class Command(BaseCommand):
         # TODO: Remove or improve before production...
         logger.info('Deleting all surveys...')
 
-        User.objects.filter(pk__gt=1).delete()
+        User.objects.filter(is_staff=False).delete()
         Survey.objects.all().delete()
         ChallengeDetail.objects.all().delete()
 
         logger.info('Starting import...')
         df = pd.read_excel(path.join(settings.BASE_DIR, 'respondents.xlsx'), sheetname='Delegates')
+        df.fillna('', inplace=True)
 
         for idx, survey in df.iterrows():
             data_raw = survey.to_dict()
@@ -64,8 +65,10 @@ class Command(BaseCommand):
             del data['countries']
 
             # Create and associate user
-            slug = data.get('slug') or slug_generator()
-            user = User.objects.create_user(slugify(data.get('name')).replace('-', '_'), data.get('email', ''), slug)
+            username = slugify(data.get('name')).replace('-', '_')
+            slug = '{0}_{1}'.format(data.get('slug')[2:] or slug_generator(), username)
+            logger.info(slug)
+            user = User.objects.create_user(username[:30], data.get('email', ''), slug)
 
             survey = Survey(**data)
             survey.slug = slug

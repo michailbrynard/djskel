@@ -1,0 +1,221 @@
+// BOOTSTRAP BASE
+// ----------------------------------------------- //
+@import "../bower_components/bootstrap/less/bootstrap.less";
+@import "../bower_components/bootswatch/simplex/variables.less";
+@import "../bower_components/bootswatch/simplex/bootswatch.less";
+// maybe need to import bootstrap utilities here..?
+@import (less) "../bower_components/select2/select2.css";
+@import (less) "../bower_components/select2/select2-bootstrap.css";
+
+//@icon-font-path: "../bower_components/bootstrap/fonts/glyph-icons";
+
+
+// GLOBAL
+// ----------------------------------------------- //
+@gsma_p0: #000000;
+@gsma_p1: #981E32;
+@gsma_p2: #E00034;
+@gsma_p3: #D47B22;
+@gsma_p4: #55517B;
+@gsma_p5: #005092;
+@gsma_p6: #A4AEB5;
+@gsma_p7: #A1B9AF;
+@gsma_p8: #DAD7CB;
+
+@background_colour: @gsma_p8;
+@border_colour: @gsma_p4;
+@shadow_colour: fadeout(@gsma_p2, 10%);
+
+@nav_height: 80px;
+@footer_height: 60px;
+
+body {
+  padding-top: @nav_height;
+  margin-bottom: @footer_height;
+  font-size: 14px;
+}
+
+a {
+  color: @gsma_p2;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+#challenge_detail_form label.control-label {
+  font-weight: bold;
+}
+
+.form-horizontal .control-label {
+  text-align: left;
+}
+
+.jumbotron {
+  p, ul {
+    font-size: 16px;
+  }
+}
+
+.anti-well {
+  padding: 3px 0;
+  background-color: inherit;
+  border: none;
+}
+
+hr.eos {
+  margin-bottom: 50px;
+}
+
+
+// NAVBAR
+// ----------------------------------------------- //
+.navbar-default {
+  min-height: @nav_height;
+  height: @nav_height;
+
+  background-color: @background_colour;
+  border-color: @border_colour;
+  box-shadow: @shadow_colour 0 0 0 1px;
+
+  .navbar-nav > li > a {
+    line-height: @nav_height;
+    height: (@nav_height - 2px);
+    padding-top: 10px;
+    font-size: 18px;
+  }
+  .navbar-header {
+    min-height: @nav_height;
+    height: @nav_height;
+  }
+  .navbar-brand {
+    min-height: @nav_height;
+    height: @nav_height;
+    padding: 0;
+    > img {
+      padding: 18px;
+      box-sizing: border-box;
+      max-height:@nav_height;
+      width: auto;
+      height: auto;
+    }
+  }
+}
+
+#navbar.navbar-collapse.collapse.in > ul.nav.navbar-nav > li.active > a {
+  top: -10px;
+  padding-top: 0;
+  padding-bottom: 0;
+  line-height: 50px;
+  height: 50px;
+  font-size: 14px;
+}
+
+#navbar.navbar-collapse.collapsing > ul.nav.navbar-nav > li.active > a {
+  top: -10px;
+  padding-top: 0;
+  padding-bottom: 0;
+  line-height: 50px;
+  height: 50px;
+  font-size: 14px;
+}
+
+@media (max-width: @screen-xs-min) {
+  .navbar-brand {
+    visibility: hidden;
+  }
+}
+
+.container .text-muted {
+  margin: 20px 0;
+}
+
+#whisper {
+  visibility: hidden;
+}
+
+//@media (max-width: @screen-xs-min) {  }
+//@media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {  }
+//@media (min-width: @screen-md-min) and (max-width: @screen-md-max) {  }
+//@media (min-width: @screen-lg-min) {  }
+
+@media (min-width: @screen-sm-min) {
+  .navbar-default .navbar-nav > li > a {
+    visibility: visible;
+  }
+
+  #whisper {
+    visibility: visible;
+    font-size: 80%;
+    color: fadeout(@gsma_p6, 50%);
+    position: fixed;
+    right: 2%;
+  }
+
+  .container .text-muted {
+    margin: 20px 0;
+    font-size: 125%;
+  }
+}
+
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > .active > a:focus {
+  color: #D9230F;
+  background-color: @background_colour;
+}
+
+p.disclaimer {
+  font-size: 1.2em;
+  text-align: justify;
+}
+
+div.panel.panel-default {
+  box-shadow: @shadow_colour 1px 1px 1px 1px;
+}
+
+.select2-container.select2-container-multi {
+  width: 100%;
+  min-height: 36px;
+  border-radius: 0px;
+}
+
+#section_tabs {
+  font-size: 16px;
+}
+
+.table-drag {
+  font-weight: 700;
+}
+
+// FOOTER
+// ----------------------------------------------- //
+footer.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: @footer_height;
+  background-color: @background_colour;
+  border: 0 solid @border_colour;
+  border-top-width: 1px;
+  box-shadow: @shadow_colour 1px 0 0 0;
+  z-index: 1030;
+}
+
+#loading {
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  position: fixed;
+  top: @nav_height;
+  left: 0;
+  z-index: 1015;
+  padding-top: 10%;
+  text-align: center;
+}

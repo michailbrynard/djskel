@@ -48,7 +48,7 @@ class Country(NaturalModel):
     region = models.ForeignKey(Region, null=True, blank=True, related_name='regions')
     capital = models.CharField(max_length=150, null=True, blank=True)
     demonym = models.CharField(max_length=150, null=True, blank=True)
-    native_name = models.CharField(max_length=150, null=True)
+    native_name = models.CharField(max_length=150, null=True, blank=True)
     population = models.IntegerField(null=True, blank=True)
     display_name = models.CharField(max_length=150, null=True, blank=True)
     position = models.IntegerField(null=True, blank=True)
@@ -57,7 +57,7 @@ class Country(NaturalModel):
         return self.display_name if self.display_name else self.name
 
     class Meta:
-        ordering = ['position', ]
+        ordering = ['display_name', ]
         verbose_name_plural = 'Countries'
 
 
@@ -66,7 +66,12 @@ class Currency(NaturalModel):
     symbol = models.CharField(max_length=10, null=True, blank=True)
 
     def __str__(self):
-        return "%s - %s (%s)" % (self.code, self.name, self.symbol)
+        if self.symbol:
+            return "%s - %s (%s)" % (self.code, self.name, self.symbol)
+        else:
+            return "%s - %s" % (self.code, self.name)
+
 
     class Meta:
         verbose_name_plural = 'Currencies'
+        ordering = ['name', ]

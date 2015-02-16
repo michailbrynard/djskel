@@ -1,11 +1,4 @@
-{#{% extends "survey/base.html" %}#}
-{##}
-{#{% block content %}#}
-{#action="{% url 'survey:provider_update' form.id.value %}"#}
-
-
 {% if form %}
-
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
@@ -21,218 +14,72 @@
 
     {% if object %}
         <form method="POST" class="form" action="{% url 'survey:provider_update' object.id %}" role="form"
-              id="provider_form">
+              id="vas_provider_form">
     {% else %}
         <form method="POST" class="form" action="{% url 'survey:provider_add' %}" role="form"
-              id="provider_form">
+              id="vas_provider_form">
     {% endif %}
 
 {% csrf_token %}
 <div class="modal-body">
-
     {% load bootstrap3 %}
     {% bootstrap_messages %}
 
-    {#{% bootstrap_form form %}#}
+    {% bootstrap_field form.vas_company_name %}
+    {% bootstrap_field form.active_countries %}
 
-    {% bootstrap_field form.company_name %}
-    {% bootstrap_field form.countries %}
-
-    {#    {% bootstrap_field form.services %}#}
     <div id="other_service_container" class="well anti-well clearfix other">
         {% bootstrap_field form.services_provided layout="" %}
-        <input id="other_service_provided" placeholder="Other (please specify...)" type="text"/>
-        <a id="other_service_provided_button" class="btn btn-default btn-xs" href="#other-service-provided">Add</a>
+        <div class="row">
+            <div class="col-xs-4">
+                <div class="input-group">
+                    <input id="other_service_provided" type="text" class="form-control"
+                           placeholder="Other (please specify...)"/>
+                      <span class="input-group-btn">
+                        <button id="other_service_provided_button" class="btn btn-default" type="button">Add</button>
+                      </span>
+                </div>
+                <!-- /input-group -->
+            </div>
+        </div>
     </div>
 
     <div class="well">
         <div class="form-group">
-
-{#            <label class="control-label" for="id_services_provided_0">#}
-{#                Of the above service areas are there any you feel this provider is particularly strong in? (tick all that apply)#}
-{#            </label>#}
-                    {% bootstrap_field form.strong_services layout="" %}
-{#            <div id="id_strong_services">#}
-{##}
-{#            </div>#}
-
+            {% bootstrap_field form.strong_services layout="" %}
         </div>
     </div>
 
-
-    {#    {% bootstrap_field form.trust_attributes %}#}
-    <div id="other_reliable_container" class="well clearfix other anti-well">
+    <div id="other_reliable_container" class="well anti-well clearfix other">
         {% bootstrap_field form.trust_attributes layout="" %}
-        <input id="other_reliable" placeholder="Other (please specify...)" type="text"/>
-        <a id="other_reliable_button" class="btn btn-default btn-xs" href="#other-reliable">Add</a>
+        <div class="row">
+            <div class="col-xs-4">
+                <div class="input-group">
+                    <input id="other_reliable" type="text" class="form-control"
+                           placeholder="Other (please specify...)"/>
+                      <span class="input-group-btn">
+                        <button id="other_reliable_button" class="btn btn-default" type="button">Add</button>
+                      </span>
+                </div>
+                <!-- /input-group -->
+            </div>
+        </div>
     </div>
 
     {% bootstrap_field form.contact_name %}
     {% bootstrap_field form.contact_email %}
-
 </div>
 
 <div class="modal-footer">
-
     {% buttons %}
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        {#        <input class="btn btn-default" type="button" data-dismiss="modal" value="Close"/>#}
-        {#        <a class="btn btn-default" type="button" data-dismiss="modal">Close</a>#}
         {% if object %}
             <button type="submit" class="btn btn-primary">Update Trusted VAS Vendor</button>
         {% else %}
             <button type="submit" class="btn btn-primary">Add Trusted VAS Vendor</button>
-            {#<input class="btn btn-primary" type="submit" value="Add Trusted VAS Vendor" />#}
         {% endif %}
     {% endbuttons %}
-
 </div>
 
 </form>
 {% endif %}
-
-{#{% endblock %}#}
-{##}
-{#{% block stuff %}#}
-{##}
-{#    <form method="POST" class="form" role="form" id="provider_form"#}
-{#          action="{% url 'survey:provider_update' form.id.value %}?tab=2">#}
-{#        {% csrf_token %}#}
-{##}
-{#    {% for field in form %}#}
-{#<div class="control-group">#}
-{#    <label class="control-label" for="id_{{ field.name }}">{{ field.label }}</label>#}
-{#    <div class="controls">#}
-{#        {{ field }}#}
-{#        <p class="help-text">{{ field.help_text }} </p>#}
-{#    </div>#}
-{#</div>#}
-{#{% endfor %}#}
-{##}
-{#        {% with form.company_name as field %}#}
-{#            <div class="form-group">#}
-{#                {% if field.errors %}#}
-{#                    <ol>#}
-{#                        {% for error in field.errors %}#}
-{#                            <li><strong>{{ error|escape }}</strong></li>#}
-{#                        {% endfor %}#}
-{#                    </ol>#}
-{#                {% endif %}#}
-{#                <label class="control-label" for="id_{{ field.name }}">#}
-{#                    {{ field.label }}#}
-{#                </label>#}
-{#                <input class="form-control"#}
-{#                       id="id_{{ field.name }}"#}
-{#                       maxlength="{{ field.field.max_length }}"#}
-{#                       name="{{ field.name }}"#}
-{#                       placeholder="{{ field.label }}"#}
-{#                       {% if field.field.required %}required="required"{% endif %}#}
-{#                       type="{{ field.field.type }}"#}
-{#                       {% if field.value %}value="{{ field.value }}"{% endif %}/>#}
-{##}
-{#                <p class="help-text">{{ field.help_text }} </p>#}
-{#            </div>#}
-{#        {% endwith %}#}
-{##}
-{#    <div class="form-group">#}
-{##}
-{#        <label class="control-label" for="id_countries">Q2. Countries in which your company works#}
-{#            with the supplier:</label><select multiple="multiple" class="form-control select2-field" id="id_countries"#}
-{#                                              name="countries" title="">#}
-{#        <option value="14">Austria</option>#}
-{#        <option value="21">Belgium</option>#}
-{#        <option value="247">Zimbabwe</option>#}
-{#        <option value="180">Republic of Kosovo</option>#}
-{#    </select></div>#}
-{##}
-{##}
-{#    <div class="form-group">#}
-{##}
-{#        <label class="control-label" for="id_services_0">Q3. Services it provides:</label>#}
-{##}
-{#        <div id="id_services">#}
-{#            <div class="checkbox"><label for="id_services_0"><input class="" id="id_services_0" name="services" title=""#}
-{#                                                                    type="checkbox" value="1"/> News</label></div>#}
-{#            <div class="checkbox"><label for="id_services_22"><input class="" id="id_services_22" name="services"#}
-{#                                                                     title="" type="checkbox" value="23"/>#}
-{#                Jobs/employment</label></div>#}
-{#            <div class="checkbox"><label for="id_services_23"><input class="" id="id_services_23" name="services"#}
-{#                                                                     title="" type="checkbox" value="24"/>#}
-{#                Security/Personal safety</label></div>#}
-{#        </div>#}
-{#    </div>#}
-{##}
-{##}
-{#    <div class="form-group">#}
-{##}
-{#        <label class="control-label" for="id_trust_attributes_0">Q4. What makes the company a#}
-{#            trusted provider?</label>#}
-{##}
-{#        <div id="id_trust_attributes">#}
-{#            <div class="checkbox"><label for="id_trust_attributes_0"><input class="" id="id_trust_attributes_0"#}
-{#                                                                            name="trust_attributes" title=""#}
-{#                                                                            type="checkbox" value="1"/> Reliable</label>#}
-{#            </div>#}
-{#        </div>#}
-{#    </div>#}
-{##}
-{##}
-{#    <div class="form-group">#}
-{##}
-{#        <label class="control-label" for="id_contact_name">Q5. Vendor contact name</label><input#}
-{#            class="form-control" id="id_contact_name" maxlength="150" name="contact_name"#}
-{#            placeholder="Q5. Vendor contact name" title="" type="text"/></div>#}
-{##}
-{##}
-{#    <div class="form-group">#}
-{#        <label class="control-label" for="id_contact_email">Q6. Vendor contact email</label>#}
-{#        <input class="form-control" id="id_contact_email" maxlength="150" name="contact_email"#}
-{#               placeholder="Q6. Vendor contact email" title="" type="email"/>#}
-{#    </div>#}
-{##}
-{#    <div id="results"></div>#}
-{##}
-{#    <button class="btn btn-primary" type="submit">Add Trusted VAS Vendor</button>#}
-{##}
-{#        {% with form.contact_name as field %}#}
-{#            <div class="form-group">#}
-{#                <label class="control-label" for="id_{{ field.name }}">#}
-{#                    {{ field.label }}#}
-{#                </label>#}
-{#                <input class="form-control"#}
-{#                       id="id_{{ field.name }}"#}
-{#                       name="{{ field.name }}"#}
-{#                       placeholder="{{ field.label }}"#}
-{#                       maxlength="{{ field.field.max_length }}"#}
-{#                       {% if field.field.required %}required="required"{% endif %}#}
-{#                       type="{{ field.field.type }}"#}
-{#                       {% if field.value %}value="{{ field.value }}"{% endif %}/>#}
-{##}
-{#                <p class="help-text">{{ field.help_text }} </p>#}
-{#            </div>#}
-{#        {% endwith %}#}
-{##}
-{##}
-{#        {% with form.contact_email as field %}#}
-{#            <div class="form-group">#}
-{#                <label class="control-label" for="id_{{ field.name }}">#}
-{#                    {{ field.label }}#}
-{#                </label>#}
-{#                <input class="form-control"#}
-{#                       id="id_{{ field.name }}"#}
-{#                       maxlength="{{ field.field.max_length }}"#}
-{#                       name="{{ field.name }}"#}
-{#                       placeholder="{{ field.label }}"#}
-{#                       {% if field.field.required %}required="required"{% endif %}#}
-{#                       type="{{ field.field.type }}"#}
-{#                       {% if field.value %}value="{{ field.value }}"{% endif %}/>#}
-{##}
-{#                <p class="help-text">{{ field.help_text }} </p>#}
-{#            </div>#}
-{#        {% endwith %}#}
-{##}
-{#        <button class="btn btn-primary" type="submit">Add Trusted VAS Vendor</button>#}
-{##}
-{#    </form>#}
-{##}
-{#{% endblock %}#}

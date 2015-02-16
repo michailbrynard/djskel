@@ -1,5 +1,6 @@
 # IMPORTS
 # ---------------------------------------------------------------------------------------------------------------------#
+import json
 from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse, HttpResponseRedirect
 from django.contrib.auth import login, authenticate
@@ -10,8 +11,11 @@ from django.http import QueryDict
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.views.generic import View
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.core.urlresolvers import reverse_lazy
+
 from survey.models import Survey, VASProvider, Service, Reliable, Challenge, ChallengeDetail, Period
-from survey.forms import ProfileForm, VASProviderForm, FinancialForm, ChallengeForm, ChallengeDetailForm
+from survey.forms import ProfileForm, VASProviderForm, FinancialForm, ChallengeForm, ChallengeDetailForm, ProgressForm
 from logging import getLogger
 
 
@@ -24,11 +28,17 @@ logger = getLogger('django')
 # ---------------------------------------------------------------------------------------------------------------------#
 def login_user(request, slug):
     logger.info('Slug is: {}, trying to log in...'.format(slug))
+
+    request.session['survey_slug'] = slug
+    request.session.save()
+    survey_instance = None
+
     try:
         survey_instance = Survey.objects.get(slug=slug)
+
     except Survey.DoesNotExist:
         logger.info('Survey does not exist...')
-        user = User(username=slug)
+        user = User(username=slug[30:])
         user.set_password(slug)
         user.email = ''
         user.save()
@@ -41,81 +51,85 @@ def login_user(request, slug):
             ChallengeDetail.objects.create(respondent=survey_instance, rank=rank)
             logger.info('Added new ChallengeDetail with respondent = {} and rank = {}'.format(survey_instance, rank))
 
-        user = authenticate(username=user.username, password=slug)
-        logger.info(user)
-        if user is not None:
-            if user.is_active:
-                login(request, user)
-                # Redirect to a success page.
-            else:
-                logger.warn('User not active')
-                pass
-                # Return a 'disabled account' error message
-        else:
-            logger.warn('Authentication Failed')
-            pass
-            # Return an 'invalid login' error message.
-
     else:
-        logger.info('Found survey and user:')
-        user = authenticate(username=survey_instance.user.username, password=slug)
-        logger.info(user)
-        if user is not None:
-            if user.is_active:
-                login(request, user)
-                # Redirect to a success page
-            else:
-                logger.warn('User not active')
-                pass
-                # Return a 'disabled account' error message
-        else:
-            logger.warn('Authentication Failed')
-            pass
-            # Return an 'invalid login' error message.
+        logger.info('Found survey and use!:')
+
     finally:
-        request.session['survey_slug'] = slug
+        if request.user.is_staff:
+            logger.info('Staff in the house!!')
+
+        else:
+            user = authenticate(username=survey_instance.user.username, password=slug)
+            logger.info('Not staff, who is %s' % survey_instance.user.username)
+
+            if user is not None:
+                # If staff member is testing
+                if user.is_active:
+                    logger.info('User is active!')
+                    login(request, user)
+                    # Redirect to a success page
+                else:
+                    logger.warn('User not active')
+                    pass
+                    # Return a 'disabled account' error message
+            else:
+                logger.warn('Authentication Failed')
+                pass
+                # Return an 'invalid login' error message.
+
+        # logger.info('Confirming that survey_slug is stored: {}'.format(request.session['survey_slug']))
         return HttpResponseRedirect(reverse('survey:about'))
 
 
 def about(request):
-    # Render the template
-    return render(request, "survey/welcome.html")
+    try:
+        slug = request.session['survey_slug']
+    except KeyError:
+        logger.warning('Expired session, could not find "survey_slug"')
+        return HttpResponseRedirect('/expired/')
+
+    survey_instance = Survey.objects.get(slug=slug)
+    progress_form = ProgressForm(instance=survey_instance)
+    return render(request, "survey/welcome.html", {'form': progress_form})
+
+
+def get_survey_context(survey_instance):
+    progress_form = ProgressForm(instance=survey_instance)
+    profile_form = ProfileForm(instance=survey_instance)
+    providers = survey_instance.vasprovider_set.all()
+    financial_form = FinancialForm(instance=survey_instance)
+    challenge_form = ChallengeForm(instance=survey_instance)
+    challenge_details = survey_instance.challengedetail_set.all()
+
+    context = {
+        'progress_form': progress_form,
+        'profile_form': profile_form,
+        'providers': providers,
+        'financial_form': financial_form,
+        'challenge_form': challenge_form,
+        'challenge_details': challenge_details,
+    }
+    return context
 
 
 def survey(request):
     try:
         slug = request.session['survey_slug']
     except KeyError:
-        return HttpResponseRedirect('/admin')
+        logger.warning('Expired session, could not find "survey_slug"')
+        return HttpResponseRedirect('/expired/')
 
     survey_instance = Survey.objects.get(slug=slug)
-
-    profile_form = ProfileForm(instance=survey_instance)
-
-    # provider_form = VASProviderForm()
-    providers = survey_instance.vasprovider_set.all()
-
-    financial_form = FinancialForm(instance=survey_instance)
-    challenge_form = ChallengeForm(instance=survey_instance)
-    challenge_details = survey_instance.challengedetail_set.all()
-
-    # challenge_detail_form = ChallengeDetailForm(instance=survey_instance, slug=slug)
-
-    context = {
-        'profile_form': profile_form,
-        'providers': providers,
-        # 'provider_form': provider_form,
-        'financial_form': financial_form,
-        'challenge_form': challenge_form,
-        'challenge_details': challenge_details,
-        # 'challenge_detail_form': challenge_detail_form,
-    }
-
-    return render(request, "survey/survey.html", context)
+    return render(request, "survey/survey.html", get_survey_context(survey_instance))
 
 
 def update_profile(request):
-    slug = request.session['survey_slug']
+    try:
+        slug = request.session['survey_slug']
+    except KeyError:
+        logger.warning('Expired session, could not find "survey_slug"')
+        return HttpResponseRedirect('/expired/')
+
     profile = Survey.objects.get(slug=slug)
 
     if request.method == 'POST':
@@ -131,15 +145,26 @@ def update_profile(request):
             user.save()
 
         else:
-            return render(request, "survey/survey.html", {'profile_form': form, })
-            # do something.
+            survey_instance = Survey.objects.get(slug=slug)
+            context = get_survey_context(survey_instance)
+            context.update({'profile_form': form})
+            return render(request, "survey/survey.html", context)
 
-    # return render(request, "survey/survey.html", {"profile": form, })
-    return HttpResponseRedirect(reverse('survey:survey') + '?tab=0&modal=success')
+    logger.info('The rent is too damn high!! %s' % request.GET.get('close', False))
+
+    if request.GET.get('close', False):
+        return HttpResponseRedirect(reverse('survey:goodbye'))
+    else:
+        return HttpResponseRedirect(reverse('survey:survey') + '?tab=0&modal=success')
 
 
 def update_financial(request):
-    slug = request.session['survey_slug']
+    try:
+        slug = request.session['survey_slug']
+    except KeyError:
+        logger.warning('Expired session, could not find "survey_slug"')
+        return HttpResponseRedirect('/expired/')
+
     profile = Survey.objects.get(slug=slug)
 
     if request.method == 'POST':
@@ -150,19 +175,28 @@ def update_financial(request):
             form.save()
 
         else:
-            return render(request, "survey/survey.html", {'financial_form': form, })
-            # do something.
+            survey_instance = Survey.objects.get(slug=slug)
+            context = get_survey_context(survey_instance)
+            context.update({'financial_form': form})
+            return render(request, "survey/survey.html", context)
 
-    # return render(request, "survey/survey.html", {"profile": form, })
-    return HttpResponseRedirect(reverse('survey:survey') + '?tab=2&modal=success')
+    if request.GET.get('close', False):
+        return HttpResponseRedirect(reverse('survey:goodbye'))
+    else:
+        return HttpResponseRedirect(reverse('survey:survey') + '?tab=2&modal=success')
 
 
 def update_challenge(request):
-    slug = request.session['survey_slug']
+    try:
+        slug = request.session['survey_slug']
+    except KeyError:
+        logger.warning('Expired session, could not find "survey_slug"')
+        return HttpResponseRedirect('/expired/')
+
     profile = Survey.objects.get(slug=slug)
 
     if request.method == 'POST':
-        logger.info(request.POST)
+        # logger.info(request.POST)
         form = ChallengeForm(request.POST, instance=profile)
 
         if form.is_valid():
@@ -172,12 +206,55 @@ def update_challenge(request):
             return render(request, "survey/survey.html", {'challenge_form': form, })
             # do something.
 
-    # return render(request, "survey/survey.html", {"profile": form, })
-    return HttpResponseRedirect(reverse('survey:survey') + '?tab=3&modal=success')
+    if request.GET.get('close', False):
+        return HttpResponseRedirect(reverse('survey:goodbye'))
+    else:
+        return HttpResponseRedirect(reverse('survey:survey') + '?tab=3&modal=success')
+
+
+def update_providers(request):
+    # slug = request.session['survey_slug']
+    # profile = Survey.objects.get(slug=slug)
+
+    if request.GET.get('close', False):
+        return HttpResponseRedirect(reverse('survey:goodbye'))
+    else:
+        return HttpResponseRedirect(reverse('survey:survey') + '?tab=1&modal=success')
+
+
+def update_section_status(request):
+    try:
+        slug = request.session['survey_slug']
+    except KeyError:
+        logger.warning('Expired session, could not find "survey_slug"')
+        return HttpResponseRedirect('/expired/')
+
+    profile = Survey.objects.get(slug=slug)
+
+    if request.method == 'POST':
+
+        logger.info(request.POST.get('is_section_0_reviewed'))
+
+        form = ProgressForm(request.POST, instance=profile)
+
+        if form.is_valid():
+            form.save()
+        else:
+            logger.info(form.errors)
+            logger.warning('Progress form not valid...')
+
+        response_data = {
+            'message': 'Success!',
+        }
+        return JsonResponse(response_data)
 
 
 def add_service(request):
-    slug = request.session['survey_slug']
+    try:
+        slug = request.session['survey_slug']
+    except KeyError:
+        logger.warning('Expired session, could not find "survey_slug"')
+        return HttpResponseRedirect('/expired/')
 
     if request.method == 'POST':
         name = request.POST.get('name')
@@ -188,12 +265,15 @@ def add_service(request):
             'id': service.id,
             'name': service.name
         }
-
         return JsonResponse(response_data)
 
 
 def add_challenge(request):
-    slug = request.session['survey_slug']
+    try:
+        slug = request.session['survey_slug']
+    except KeyError:
+        logger.warning('Expired session, could not find "survey_slug"')
+        return HttpResponseRedirect('/expired/')
 
     if request.method == 'POST':
         name = request.POST.get('name')
@@ -204,12 +284,45 @@ def add_challenge(request):
             'id': challenge.id,
             'name': challenge.name
         }
+        return JsonResponse(response_data)
 
+
+def reorder_challenge(request):
+    try:
+        slug = request.session['survey_slug']
+    except KeyError:
+        logger.warning('Expired session, could not find "survey_slug"')
+        return HttpResponseRedirect('/expired/')
+
+    respondent = Survey.objects.get(slug=slug)
+
+    if request.method == 'POST':
+
+        data = request.POST
+        logger.info(data)
+        order = dict(data)['challenge-table[]']
+        logger.info(order)
+
+        challenges = []
+        for k, v in enumerate(order):
+            challenge = ChallengeDetail.objects.get(respondent=respondent, rank=k+1)
+            logger.info('{0}\t-\tOld rank: {1}\tNew Rank: {2}'.format(challenge, k+1, int(v)))
+            challenge.rank = int(v)
+            challenges.append(challenge)
+
+        for challenge in challenges:
+            challenge.save()
+
+        response_data = {}
         return JsonResponse(response_data)
 
 
 def add_period(request):
-    slug = request.session['survey_slug']
+    try:
+        slug = request.session['survey_slug']
+    except KeyError:
+        logger.warning('Expired session, could not find "survey_slug"')
+        return HttpResponseRedirect('/expired/')
 
     if request.method == 'POST':
         name = request.POST.get('name')
@@ -220,12 +333,15 @@ def add_period(request):
             'id': roi_period.id,
             'name': roi_period.name
         }
-
         return JsonResponse(response_data)
 
 
 def add_reliable(request):
-    slug = request.session['survey_slug']
+    try:
+        slug = request.session['survey_slug']
+    except KeyError:
+        logger.warning('Expired session, could not find "survey_slug"')
+        return HttpResponseRedirect('/expired/')
 
     if request.method == 'POST':
         name = request.POST.get('name')
@@ -236,12 +352,15 @@ def add_reliable(request):
             'id': reliable.id,
             'name': reliable.name
         }
-
         return JsonResponse(response_data)
 
 
 def create_provider(request):
-    slug = request.session['survey_slug']
+    try:
+        slug = request.session['survey_slug']
+    except KeyError:
+        logger.warning('Expired session, could not find "survey_slug"')
+        return HttpResponseRedirect('/expired/')
 
     if request.method == 'POST':
 
@@ -272,7 +391,11 @@ def create_provider(request):
 
 
 def get_provider(request, pk):
-    slug = request.session['survey_slug']
+    try:
+        slug = request.session['survey_slug']
+    except KeyError:
+        logger.warning('Expired session, could not find "survey_slug"')
+        return HttpResponseRedirect('/expired/')
     vas = VASProvider.objects.get(slug=slug, pk=pk)
     form = VASProviderForm(request.POST, instance=vas)
 
@@ -280,18 +403,19 @@ def get_provider(request, pk):
 
 
 def update_provider(request, pk):
-    slug = request.session['survey_slug']
+    try:
+        slug = request.session['survey_slug']
+    except KeyError:
+        logger.warning('Expired session, could not find "survey_slug"')
+        return HttpResponseRedirect('/expired/')
 
     if request.method == 'POST':
 
         if pk is not None:
             vas = VASProvider.objects.get(pk=pk)
             form = VASProviderForm(request.POST, instance=vas)
-
         else:
             form = VASProviderForm(request.POST)
-
-        # form = VASProviderForm(request.POST)
 
         if form.is_valid():
             response_data = {}
@@ -327,28 +451,25 @@ def delete_provider(request):
 
 class ProviderView(View):
     form_class = VASProviderForm
-    # initial = {'key': 'value'}
 
     template_name = 'provider_template.html'
 
     def get(self, request, pk, *args, **kwargs):
-        slug = request.session['survey_slug']
+        try:
+            slug = self.request.session['survey_slug']
+        except KeyError:
+            logger.warning('Expired session, could not find "survey_slug"')
+            return HttpResponseRedirect('/expired/')
         vas = VASProvider.objects.get(slug=slug, pk=pk)
-        form = self.form_class(instance=vas)
+        form = self.form_class(instance=vas, slug=slug)
         return render(request, self.template_name, {'form': form})
 
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
         if form.is_valid():
-            # <process form cleaned data>
             return HttpResponseRedirect('/success/')
 
         return render(request, self.template_name, {'form': form})
-
-
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.core.urlresolvers import reverse_lazy
-from survey.models import VASProvider
 
 
 class ProviderCreate(CreateView):
@@ -366,9 +487,6 @@ class ProviderCreate(CreateView):
     def form_valid(self, form):
         slug = self.request.session['survey_slug']
         form.instance.respondent = Survey.objects.get(slug=slug)
-        # self.object = form.save()
-        # return HttpResponseRedirect(self.get_success_url())
-        # return HttpResponseRedirect(reverse('survey:survey') + '?tab=1')
         return super(ProviderCreate, self).form_valid(form)
 
 
@@ -383,13 +501,6 @@ class ProviderUpdate(UpdateView):
         kwargs = super(ProviderUpdate, self).get_form_kwargs()
         kwargs.update({'slug': self.request.session['survey_slug']})
         return kwargs
-
-        # return reverse_lazy('survey:provider_update', kwargs={'pk': self.object.id})
-        # if 'slug' in self.kwargs:
-        #     slug = self.kwargs['slug']
-        # else:
-        #     slug = 'demo'
-        # return reverse('app_upload', kwargs={'pk': self._id, 'slug': slug})
 
 
 class ProviderDelete(DeleteView):
@@ -427,33 +538,3 @@ class ChallengeDetailUpdate(UpdateView):
 
     def get_success_url(self):
         return reverse('survey:survey') + '?tab=3'
-
-
-# class ChallengeDetailUpdate(UpdateView):
-#     model = ChallengeDetail
-#     form_class = ChallengeDetailForm
-#
-#     def get_object(self, model=ChallengeDetail):
-#         slug = self.request.session['survey_slug']
-#         survey_instance = Survey.objects.get(slug=slug)
-#         obj = ChallengeDetail.objects.get(pk=1)  # id=self.kwargs['pk'], owner=survey_instance)
-#         return obj
-#
-#     def get_success_url(self):
-#         return reverse('survey:survey') + '?tab=3'
-#
-#
-# class ChallengeDetailCreate(CreateView):
-#     model = ChallengeDetail
-#     form_class = ChallengeDetailForm
-#
-#
-#     def get_object(self, model=ChallengeDetail):
-#         slug = self.request.session['survey_slug']
-#         survey_instance = Survey.objects.get(slug=slug)
-#         obj = ChallengeDetail.objects.get(pk=1)  # id=self.kwargs['pk'], owner=survey_instance)
-#         return obj
-#
-#     def get_success_url(self):
-#         return reverse('survey:survey') + '?tab=3'
-
