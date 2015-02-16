@@ -13,21 +13,24 @@ logger = getLogger('django')
 # ADMIN
 # ---------------------------------------------------------------------------------------------------------------------#
 class CountryAdmin(admin.ModelAdmin):
+    change_list_template = "admin/change_list_filter_sidebar.html"
     list_display = ['alpha2code', 'name', 'native_name', 'display_name', 'continent', 'population']
     list_filter = ['continent', 'region']
     search_fields = ['name', 'native_name', 'continent__name', 'region__name', 'alpha2code', 'display_name']
 
 
 class RegionAdmin(admin.ModelAdmin):
-    pass
+    search_fields = ['name', ]
 
 
 class SubRegionAdmin(admin.ModelAdmin):
-    pass
+    search_fields = ['name', ]
 
 
 class CurrencyAdmin(admin.ModelAdmin):
-    fields = ['code', 'name']
+    search_fields = ['name', 'code', 'symbol']
+    list_display = ['code', 'name', 'symbol']
+    fields = ['code', 'name', 'symbol']
 
 
 # REGISTER

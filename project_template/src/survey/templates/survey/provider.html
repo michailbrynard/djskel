@@ -1,12 +1,73 @@
-{% if form %}
+{% if True %}
     {% load bootstrap3 %}
     {% bootstrap_messages %}
 
-    <form method="POST" class="form" role="form" id="provider-form">
-        {% csrf_token %}
-        {% bootstrap_form form %}
-        {#{{ form }}#}
-        <div id="results"></div>
-        <button class="btn btn-primary" type="submit">Add Trusted VAS Vendor</button>
+    <form id="provider_form" class="form" action="{% url 'survey:update_providers' %}?tab=1" method="post" role="form">
+    {% csrf_token %}
+    <input type="hidden" name="tab" value="1" />
+    <input type="hidden" name="modal" value="success" />
+
+		<p>Instructions...</p>
+
+        <a id="add_provider_btn_top" class="btn btn-default" data-toggle="modal"
+           href="{% url "survey:provider_add" %}"
+           data-target="#providerAddModal" title="Add">Add object</a>
+
+        <hr/>
+
+        <div class="jumbotron">
+
+            <!-- The feed -->
+            <table class="table table-hover" id="provider">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Company Name</th>
+                    <th>Contact Name</th>
+                    <th>Contact Email</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for provider in providers %}
+                    <tr id="provider-{{ provider.id }}">
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ provider.vas_company_name }}</td>
+                        <td>{{ provider.contact_name }}</td>
+                        <td><a href="mailto:{{ provider.contact_email }}">{{ provider.contact_email }}</a>
+                        </td>
+                        <td>
+
+                            <a class="btn btn-sm btn-primary" data-toggle="modal"
+                               href="{% url "survey:provider_update" provider.id %}"
+                               data-target="#providerAddModal" title="Edit" data-tooltip>Edit</a>
+
+                            <a id='delete-provider-{{ provider.id }}' class="btn btn-sm btn-primary"
+                               title="Delete"
+                               data-tooltip>Delete</a>
+                        </td>
+                    </tr>
+                {% empty %}
+
+                    Please click "Add object" button to add vendors.
+
+                {% endfor %}
+                </tbody>
+            </table>
+
+<h4><span id="provider-count"></span> out of 10 providers added.</h4>
+
+        </div>
+
+        <a id="add_provider_btn_bottom" class="btn btn-default" data-toggle="modal"
+           href="{% url "survey:provider_add" %}"
+           data-target="#providerAddModal" title="Add">Add object</a>
+
+
+        {% buttons %}
+            <br/>
+            <button name="continue" class="btn btn-lg btn-primary" type="submit">Save & continue</button>
+            <button name="close" class="btn btn-lg btn-primary" type="submit">Save & close</button>
+        {% endbuttons %}
     </form>
 {% endif %}

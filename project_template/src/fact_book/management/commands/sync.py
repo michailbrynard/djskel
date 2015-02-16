@@ -267,119 +267,652 @@ COUNTRIES = {
 }
 
 CURRENCIES = {
-    'ALL': {'symbol': 'Lek', 'name': 'Albania Lek'},
-    'AFN': {'symbol': '؋', 'name': 'Afghanistan Afghani'},
-    'ARS': {'symbol': '$', 'name': 'Argentina Peso'},
-    'AWG': {'symbol': 'ƒ', 'name': 'Aruba Guilder'},
-    'AUD': {'symbol': '$', 'name': 'Australia Dollar'},
-    'AZN': {'symbol': 'ман', 'name': 'Azerbaijan New Manat'},
-    'BSD': {'symbol': '$', 'name': 'Bahamas Dollar'},
-    'BBD': {'symbol': '$', 'name': 'Barbados Dollar'},
-    'BYR': {'symbol': 'p.', 'name': 'Belarus Ruble'},
-    'BZD': {'symbol': 'BZ$', 'name': 'Belize Dollar'},
-    'BMD': {'symbol': '$', 'name': 'Bermuda Dollar'},
-    'BOB': {'symbol': '$b', 'name': 'Bolivia Boliviano'},
-    'BAM': {'symbol': 'KM', 'name': 'Bosnia and Herzegovina Convertible Marka'},
-    'BWP': {'symbol': 'P', 'name': 'Botswana Pula'},
-    'BGN': {'symbol': 'лв', 'name': 'Bulgaria Lev'},
-    'BRL': {'symbol': 'R$', 'name': 'Brazil Real'},
-    'BND': {'symbol': '$', 'name': 'Brunei Darussalam Dollar'},
-    'KHR': {'symbol': '៛', 'name': 'Cambodia Riel'},
-    'CAD': {'symbol': '$', 'name': 'Canada Dollar'},
-    'KYD': {'symbol': '$', 'name': 'Cayman Islands Dollar'},
-    'CLP': {'symbol': '$', 'name': 'Chile Peso'},
-    'CNY': {'symbol': '¥', 'name': 'China Yuan Renminbi'},
-    'COP': {'symbol': '$', 'name': 'Colombia Peso'},
-    'CRC': {'symbol': '₡', 'name': 'Costa Rica Colon'},
-    'HRK': {'symbol': 'kn', 'name': 'Croatia Kuna'},
-    'CUP': {'symbol': '₱', 'name': 'Cuba Peso'},
-    'CZK': {'symbol': 'Kč', 'name': 'Czech Republic Koruna'},
-    'DKK': {'symbol': 'kr', 'name': 'Denmark Krone'},
-    'DOP': {'symbol': 'RD$', 'name': 'Dominican Republic Peso'},
-    'XCD': {'symbol': '$', 'name': 'East Caribbean Dollar'},
-    'EGP': {'symbol': '£', 'name': 'Egypt Pound'},
-    'SVC': {'symbol': '$', 'name': 'El Salvador Colon'},
-    'EEK': {'symbol': 'kr', 'name': 'Estonia Kroon'},
-    'EUR': {'symbol': '€', 'name': 'Euro Member Countries'},
-    'FKP': {'symbol': '£', 'name': 'Falkland Islands (Malvinas) Pound'},
-    'FJD': {'symbol': '$', 'name': 'Fiji Dollar'},
-    'GHC': {'symbol': '¢', 'name': 'Ghana Cedi'},
-    'GIP': {'symbol': '£', 'name': 'Gibraltar Pound'},
-    'GTQ': {'symbol': 'Q', 'name': 'Guatemala Quetzal'},
-    'GGP': {'symbol': '£', 'name': 'Guernsey Pound'},
-    'GYD': {'symbol': '$', 'name': 'Guyana Dollar'},
-    'HNL': {'symbol': 'L', 'name': 'Honduras Lempira'},
-    'HKD': {'symbol': '$', 'name': 'Hong Kong Dollar'},
-    'HUF': {'symbol': 'Ft', 'name': 'Hungary Forint'},
-    'ISK': {'symbol': 'kr', 'name': 'Iceland Krona'},
-    'INR': {'symbol': '₹', 'name': 'India Rupee'},
-    'IDR': {'symbol': 'Rp', 'name': 'Indonesia Rupiah'},
-    'IRR': {'symbol': '﷼', 'name': 'Iran Rial'},
-    'IMP': {'symbol': '£', 'name': 'Isle of Man Pound'},
-    'ILS': {'symbol': '₪', 'name': 'Israel Shekel'},
-    'JMD': {'symbol': 'J$', 'name': 'Jamaica Dollar'},
-    'JPY': {'symbol': '¥', 'name': 'Japan Yen'},
-    'JEP': {'symbol': '£', 'name': 'Jersey Pound'},
-    'KZT': {'symbol': 'лв', 'name': 'Kazakhstan Tenge'},
-    'KPW': {'symbol': '₩', 'name': 'Korea (North) Won'},
-    'KRW': {'symbol': '₩', 'name': 'Korea (South) Won'},
-    'KGS': {'symbol': 'лв', 'name': 'Kyrgyzstan Som'},
-    'LAK': {'symbol': '₭', 'name': 'Laos Kip'},
-    'LVL': {'symbol': 'Ls', 'name': 'Latvia Lat'},
-    'LBP': {'symbol': '£', 'name': 'Lebanon Pound'},
-    'LRD': {'symbol': '$', 'name': 'Liberia Dollar'},
-    'LTL': {'symbol': 'Lt', 'name': 'Lithuania Litas'},
-    'MKD': {'symbol': 'ден', 'name': 'Macedonia Denar'},
-    'MYR': {'symbol': 'RM', 'name': 'Malaysia Ringgit'},
-    'MUR': {'symbol': '₨', 'name': 'Mauritius Rupee'},
-    'MXN': {'symbol': '$', 'name': 'Mexico Peso'},
-    'MNT': {'symbol': '₮', 'name': 'Mongolia Tughrik'},
-    'MZN': {'symbol': 'MT', 'name': 'Mozambique Metical'},
-    'NAD': {'symbol': '$', 'name': 'Namibia Dollar'},
-    'NPR': {'symbol': '₨', 'name': 'Nepal Rupee'},
-    'ANG': {'symbol': 'ƒ', 'name': 'Netherlands Antilles Guilder'},
-    'NZD': {'symbol': '$', 'name': 'New Zealand Dollar'},
-    'NIO': {'symbol': 'C$', 'name': 'Nicaragua Cordoba'},
-    'NGN': {'symbol': '₦', 'name': 'Nigeria Naira'},
-    'NOK': {'symbol': 'kr', 'name': 'Norway Krone'},
-    'OMR': {'symbol': '﷼', 'name': 'Oman Rial'},
-    'PKR': {'symbol': '₨', 'name': 'Pakistan Rupee'},
-    'PAB': {'symbol': 'B/.', 'name': 'Panama Balboa'},
-    'PYG': {'symbol': 'Gs', 'name': 'Paraguay Guarani'},
-    'PEN': {'symbol': 'S/.', 'name': 'Peru Nuevo Sol'},
-    'PHP': {'symbol': '₱', 'name': 'Philippines Peso'},
-    'PLN': {'symbol': 'zł', 'name': 'Poland Zloty'},
-    'QAR': {'symbol': '﷼', 'name': 'Qatar Riyal'},
-    'RON': {'symbol': 'lei', 'name': 'Romania New Leu'},
-    'RUB': {'symbol': 'руб', 'name': 'Russia Ruble'},
-    'SHP': {'symbol': '£', 'name': 'Saint Helena Pound'},
-    'SAR': {'symbol': '﷼', 'name': 'Saudi Arabia Riyal'},
-    'RSD': {'symbol': 'Дин.', 'name': 'Serbia Dinar'},
-    'SCR': {'symbol': '₨', 'name': 'Seychelles Rupee'},
-    'SGD': {'symbol': '$', 'name': 'Singapore Dollar'},
-    'SBD': {'symbol': '$', 'name': 'Solomon Islands Dollar'},
-    'SOS': {'symbol': 'S', 'name': 'Somalia Shilling'},
-    'ZAR': {'symbol': 'R', 'name': 'South Africa Rand'},
-    'LKR': {'symbol': '₨', 'name': 'Sri Lanka Rupee'},
-    'SEK': {'symbol': 'kr', 'name': 'Sweden Krona'},
-    'CHF': {'symbol': 'CHF', 'name': 'Switzerland Franc'},
-    'SRD': {'symbol': '$', 'name': 'Suriname Dollar'},
-    'SYP': {'symbol': '£', 'name': 'Syria Pound'},
-    'TWD': {'symbol': 'NT$', 'name': 'Taiwan New Dollar'},
-    'THB': {'symbol': '฿', 'name': 'Thailand Baht'},
-    'TTD': {'symbol': 'TT$', 'name': 'Trinidad and Tobago Dollar'},
-    'TRY': {'symbol': '₺', 'name': 'Turkey Lira'},
-    'TVD': {'symbol': '$', 'name': 'Tuvalu Dollar'},
-    'UAH': {'symbol': '₴', 'name': 'Ukraine Hryvnia'},
-    'GBP': {'symbol': '£', 'name': 'United Kingdom Pound'},
-    'USD': {'symbol': '$', 'name': 'United States Dollar'},
-    'UYU': {'symbol': '$U', 'name': 'Uruguay Peso'},
-    'UZS': {'symbol': 'лв', 'name': 'Uzbekistan Som'},
-    'VEF': {'symbol': 'Bs', 'name': 'Venezuela Bolivar'},
-    'VND': {'symbol': '₫', 'name': 'Vietnam Dong'},
-    'YER': {'symbol': '﷼', 'name': 'Yemen Rial'},
-    'ZWD': {'symbol': 'Z$', 'name': 'Zimbabwe Dollar'},
+    'AED': {
+        'symbol': '',
+        'name': 'United Arab Emirates Dirham',
+        'url': 'http://xe.com/currency/?currency=aed-emirati-dirham'},
+    'AFN': {
+        'symbol': '؋',
+        'name': 'Afghanistan Afghani',
+        'url': 'http://xe.com/currency/?currency=afn-afghan-afghani'},
+    'ALL': {
+        'symbol': 'Lek',
+        'name': 'Albania Lek',
+        'url': 'http://xe.com/currency/?currency=all-albanian-lek'},
+    'AMD': {
+        'symbol': '',
+        'name': 'Armenia Dram',
+        'url': 'http://xe.com/currency/?currency=amd-armenian-dram'},
+    'ANG': {
+        'symbol': 'ƒ',
+        'name': 'Netherlands Antilles Guilder',
+        'url': 'http://xe.com/currency/?currency=ang-dutch-guilder'},
+    'AOA': {
+        'symbol': '',
+        'name': 'Angola Kwanza',
+        'url': 'http://xe.com/currency/?currency=aoa-angolan-kwanza'},
+    'ARS': {
+        'symbol': '$',
+        'name': 'Argentina Peso',
+        'url': 'http://xe.com/currency/?currency=ars-argentine-peso'},
+    'AUD': {
+        'symbol': '$',
+        'name': 'Australia Dollar',
+        'url': 'http://xe.com/currency/?currency=aud-australian-dollar'},
+    'AWG': {
+        'symbol': 'ƒ',
+        'name': 'Aruba Guilder',
+        'url': 'http://xe.com/currency/?currency=awg-aruban-or-dutch-guilder'},
+    'AZN': {
+        'symbol': 'ман',
+        'name': 'Azerbaijan New Manat',
+        'url': 'http://xe.com/currency/?currency=azn-azerbaijani-new-manat'},
+    'BAM': {
+        'symbol': 'KM',
+        'name': 'Bosnia and Herzegovina Convertible Marka',
+        'url': 'http://xe.com/currency/?currency=bam-bosnian-convertible-marka'},
+    'BBD': {
+        'symbol': '$',
+        'name': 'Barbados Dollar',
+        'url': 'http://xe.com/currency/?currency=bbd-barbadian-or-bajan-dollar'},
+    'BDT': {
+        'symbol': '',
+        'name': 'Bangladesh Taka',
+        'url': 'http://xe.com/currency/?currency=bdt-bangladeshi-taka'},
+    'BGN': {
+        'symbol': 'лв',
+        'name': 'Bulgaria Lev',
+        'url': 'http://xe.com/currency/?currency=bgn-bulgarian-lev'},
+    'BHD': {
+        'symbol': '',
+        'name': 'Bahrain Dinar',
+        'url': 'http://xe.com/currency/?currency=bhd-bahraini-dinar'},
+    'BIF': {
+        'symbol': '',
+        'name': 'Burundi Franc',
+        'url': 'http://xe.com/currency/?currency=bif-burundian-franc'},
+    'BMD': {
+        'symbol': '$',
+        'name': 'Bermuda Dollar',
+        'url': 'http://xe.com/currency/?currency=bmd-bermudian-dollar'},
+    'BND': {
+        'symbol': '$',
+        'name': 'Brunei Darussalam Dollar',
+        'url': 'http://xe.com/currency/?currency=bnd-bruneian-dollar'},
+    'BOB': {
+        'symbol': '$b',
+        'name': 'Bolivia Boliviano',
+        'url': 'http://xe.com/currency/?currency=bob-bolivian-boliviano'},
+    'BRL': {
+        'symbol': 'R$',
+        'name': 'Brazil Real',
+        'url': 'http://xe.com/currency/?currency=brl-brazilian-real'},
+    'BSD': {
+        'symbol': '$',
+        'name': 'Bahamas Dollar',
+        'url': 'http://xe.com/currency/?currency=bsd-bahamian-dollar'},
+    'BTN': {
+        'symbol': '',
+        'name': 'Bhutan Ngultrum',
+        'url': 'http://xe.com/currency/?currency=btn-bhutanese-ngultrum'},
+    'BWP': {
+        'symbol': 'P',
+        'name': 'Botswana Pula',
+        'url': 'http://xe.com/currency/?currency=bwp-botswana-pula'},
+    'BYR': {
+        'symbol': 'p.',
+        'name': 'Belarus Ruble',
+        'url': 'http://xe.com/currency/?currency=byr-belarusian-ruble'},
+    'BZD': {
+        'symbol': 'BZ$',
+        'name': 'Belize Dollar',
+        'url': 'http://xe.com/currency/?currency=bzd-belizean-dollar'},
+    'CAD': {
+        'symbol': '$',
+        'name': 'Canada Dollar',
+        'url': 'http://xe.com/currency/?currency=cad-canadian-dollar'},
+    'CDF': {
+        'symbol': '',
+        'name': 'Congo/Kinshasa Franc',
+        'url': 'http://xe.com/currency/?currency=cdf-congolese-franc'},
+    'CHF': {
+        'symbol': 'CHF',
+        'name': 'Switzerland Franc',
+        'url': 'http://xe.com/currency/?currency=chf-swiss-franc'},
+    'CLP': {
+        'symbol': '$',
+        'name': 'Chile Peso',
+        'url': 'http://xe.com/currency/?currency=clp-chilean-peso'},
+    'CNY': {
+        'symbol': '¥',
+        'name': 'China Yuan Renminbi',
+        'url': 'http://xe.com/currency/?currency=cny-chinese-yuan-renminbi'},
+    'COP': {
+        'symbol': '$',
+        'name': 'Colombia Peso',
+        'url': 'http://xe.com/currency/?currency=cop-colombian-peso'},
+    'CRC': {
+        'symbol': '₡',
+        'name': 'Costa Rica Colon',
+        'url': 'http://xe.com/currency/?currency=crc-costa-rican-colon'},
+    'CUC': {
+        'symbol': '',
+        'name': 'Cuba Convertible Peso',
+        'url': 'http://xe.com/currency/?currency=cuc-cuban-convertible-peso'},
+    'CUP': {
+        'symbol': '₱',
+        'name': 'Cuba Peso',
+        'url': 'http://xe.com/currency/?currency=cup-cuban-peso'},
+    'CVE': {
+        'symbol': '',
+        'name': 'Cape Verde Escudo',
+        'url': 'http://xe.com/currency/?currency=cve-cape-verdean-escudo'},
+    'CZK': {
+        'symbol': 'Kč',
+        'name': 'Czech Republic Koruna',
+        'url': 'http://xe.com/currency/?currency=czk-czech-koruna'},
+    'DJF': {
+        'symbol': '',
+        'name': 'Djibouti Franc',
+        'url': 'http://xe.com/currency/?currency=djf-djiboutian-franc'},
+    'DKK': {
+        'symbol': 'kr',
+        'name': 'Denmark Krone',
+        'url': 'http://xe.com/currency/?currency=dkk-danish-krone'},
+    'DOP': {
+        'symbol': 'RD$',
+        'name': 'Dominican Republic Peso',
+        'url': 'http://xe.com/currency/?currency=dop-dominican-peso'},
+    'DZD': {
+        'symbol': '',
+        'name': 'Algeria Dinar',
+        'url': 'http://xe.com/currency/?currency=dzd-algerian-dinar'},
+    'EGP': {
+        'symbol': '£',
+        'name': 'Egypt Pound',
+        'url': 'http://xe.com/currency/?currency=egp-egyptian-pound'},
+    'ERN': {
+        'symbol': '',
+        'name': 'Eritrea Nakfa',
+        'url': 'http://xe.com/currency/?currency=ern-eritrean-nakfa'},
+    'ETB': {
+        'symbol': '',
+        'name': 'Ethiopia Birr',
+        'url': 'http://xe.com/currency/?currency=etb-ethiopian-birr'},
+    'EUR': {
+        'symbol': '€',
+        'name': 'Euro Member Countries',
+        'url': 'http://xe.com/currency/?currency=eur-euro'},
+    'FJD': {
+        'symbol': '$',
+        'name': 'Fiji Dollar',
+        'url': 'http://xe.com/currency/?currency=fjd-fijian-dollar'},
+    'FKP': {
+        'symbol': '£',
+        'name': 'Falkland Islands (Malvinas) Pound',
+        'url': 'http://xe.com/currency/?currency=fkp-falkland-island-pound'},
+    'GBP': {
+        'symbol': '£',
+        'name': 'United Kingdom Pound',
+        'url': 'http://xe.com/currency/?currency=gbp-british-pound'},
+    'GEL': {
+        'symbol': '',
+        'name': 'Georgia Lari',
+        'url': 'http://xe.com/currency/?currency=gel-georgian-lari'},
+    'GGP': {
+        'symbol': '£',
+        'name': 'Guernsey Pound',
+        'url': 'http://xe.com/currency/?currency=ggp-guernsey-pound'},
+    'GHS': {
+        'symbol': '¢',
+        'name': 'Ghana Cedi',
+        'url': 'http://xe.com/currency/?currency=ghs-ghanaian-cedi'},
+    'GIP': {
+        'symbol': '£',
+        'name': 'Gibraltar Pound',
+        'url': 'http://xe.com/currency/?currency=gip-gibraltar-pound'},
+    'GMD': {
+        'symbol': '',
+        'name': 'Gambia Dalasi',
+        'url': 'http://xe.com/currency/?currency=gmd-gambian-dalasi'},
+    'GNF': {
+        'symbol': '',
+        'name': 'Guinea Franc',
+        'url': 'http://xe.com/currency/?currency=gnf-guinean-franc'},
+    'GTQ': {
+        'symbol': 'Q',
+        'name': 'Guatemala Quetzal',
+        'url': 'http://xe.com/currency/?currency=gtq-guatemalan-quetzal'},
+    'GYD': {
+        'symbol': '$',
+        'name': 'Guyana Dollar',
+        'url': 'http://xe.com/currency/?currency=gyd-guyanese-dollar'},
+    'HKD': {
+        'symbol': '$',
+        'name': 'Hong Kong Dollar',
+        'url': 'http://xe.com/currency/?currency=hkd-hong-kong-dollar'},
+    'HNL': {
+        'symbol': 'L',
+        'name': 'Honduras Lempira',
+        'url': 'http://xe.com/currency/?currency=hnl-honduran-lempira'},
+    'HRK': {
+        'symbol': 'kn',
+        'name': 'Croatia Kuna',
+        'url': 'http://xe.com/currency/?currency=hrk-croatian-kuna'},
+    'HTG': {
+        'symbol': '',
+        'name': 'Haiti Gourde',
+        'url': 'http://xe.com/currency/?currency=htg-haitian-gourde'},
+    'HUF': {
+        'symbol': 'Ft',
+        'name': 'Hungary Forint',
+        'url': 'http://xe.com/currency/?currency=huf-hungarian-forint'},
+    'IDR': {
+        'symbol': 'Rp',
+        'name': 'Indonesia Rupiah',
+        'url': 'http://xe.com/currency/?currency=idr-indonesian-rupiah'},
+    'ILS': {
+        'symbol': '₪',
+        'name': 'Israel Shekel',
+        'url': 'http://xe.com/currency/?currency=ils-israeli-shekel'},
+    'IMP': {
+        'symbol': '£',
+        'name': 'Isle of Man Pound',
+        'url': 'http://xe.com/currency/?currency=imp-isle-of-man-pound'},
+    'INR': {
+        'symbol': '₹',
+        'name': 'India Rupee',
+        'url': 'http://xe.com/currency/?currency=inr-indian-rupee'},
+    'IQD': {
+        'symbol': '',
+        'name': 'Iraq Dinar',
+        'url': 'http://xe.com/currency/?currency=iqd-iraqi-dinar'},
+    'IRR': {
+        'symbol': '﷼',
+        'name': 'Iran Rial',
+        'url': 'http://xe.com/currency/?currency=irr-iranian-rial'},
+    'ISK': {
+        'symbol': 'kr',
+        'name': 'Iceland Krona',
+        'url': 'http://xe.com/currency/?currency=isk-icelandic-krona'},
+    'JEP': {
+        'symbol': '£',
+        'name': 'Jersey Pound',
+        'url': 'http://xe.com/currency/?currency=jep-jersey-pound'},
+    'JMD': {
+        'symbol': 'J$',
+        'name': 'Jamaica Dollar',
+        'url': 'http://xe.com/currency/?currency=jmd-jamaican-dollar'},
+    'JOD': {
+        'symbol': '',
+        'name': 'Jordan Dinar',
+        'url': 'http://xe.com/currency/?currency=jod-jordanian-dinar'},
+    'JPY': {
+        'symbol': '¥',
+        'name': 'Japan Yen',
+        'url': 'http://xe.com/currency/?currency=jpy-japanese-yen'},
+    'KES': {
+        'symbol': '',
+        'name': 'Kenya Shilling',
+        'url': 'http://xe.com/currency/?currency=kes-kenyan-shilling'},
+    'KGS': {
+        'symbol': 'лв',
+        'name': 'Kyrgyzstan Som',
+        'url': 'http://xe.com/currency/?currency=kgs-kyrgyzstani-som'},
+    'KHR': {
+        'symbol': '៛',
+        'name': 'Cambodia Riel',
+        'url': 'http://xe.com/currency/?currency=khr-cambodian-riel'},
+    'KMF': {
+        'symbol': '',
+        'name': 'Comoros Franc',
+        'url': 'http://xe.com/currency/?currency=kmf-comoran-franc'},
+    'KPW': {
+        'symbol': '₩',
+        'name': 'Korea (North) Won',
+        'url': 'http://xe.com/currency/?currency=kpw-north-korean-won'},
+    'KRW': {
+        'symbol': '₩',
+        'name': 'Korea (South) Won',
+        'url': 'http://xe.com/currency/?currency=krw-south-korean-won'},
+    'KWD': {
+        'symbol': '',
+        'name': 'Kuwait Dinar',
+        'url': 'http://xe.com/currency/?currency=kwd-kuwaiti-dinar'},
+    'KYD': {
+        'symbol': '$',
+        'name': 'Cayman Islands Dollar',
+        'url': 'http://xe.com/currency/?currency=kyd-caymanian-dollar'},
+    'KZT': {
+        'symbol': 'лв',
+        'name': 'Kazakhstan Tenge',
+        'url': 'http://xe.com/currency/?currency=kzt-kazakhstani-tenge'},
+    'LAK': {
+        'symbol': '₭',
+        'name': 'Laos Kip',
+        'url': 'http://xe.com/currency/?currency=lak-lao-or-laotian-kip'},
+    'LBP': {
+        'symbol': '£',
+        'name': 'Lebanon Pound',
+        'url': 'http://xe.com/currency/?currency=lbp-lebanese-pound'},
+    'LKR': {
+        'symbol': '₨',
+        'name': 'Sri Lanka Rupee',
+        'url': 'http://xe.com/currency/?currency=lkr-sri-lankan-rupee'},
+    'LRD': {
+        'symbol': '$',
+        'name': 'Liberia Dollar',
+        'url': 'http://xe.com/currency/?currency=lrd-liberian-dollar'},
+    'LSL': {
+        'symbol': '',
+        'name': 'Lesotho Loti',
+        'url': 'http://xe.com/currency/?currency=lsl-basotho-loti'},
+    'LYD': {
+        'symbol': '',
+        'name': 'Libya Dinar',
+        'url': 'http://xe.com/currency/?currency=lyd-libyan-dinar'},
+    'MAD': {
+        'symbol': '',
+        'name': 'Morocco Dirham',
+        'url': 'http://xe.com/currency/?currency=mad-moroccan-dirham'},
+    'MDL': {
+        'symbol': '',
+        'name': 'Moldova Leu',
+        'url': 'http://xe.com/currency/?currency=mdl-moldovan-leu'},
+    'MGA': {
+        'symbol': '',
+        'name': 'Madagascar Ariary',
+        'url': 'http://xe.com/currency/?currency=mga-malagasy-ariary'},
+    'MKD': {
+        'symbol': 'ден',
+        'name': 'Macedonia Denar',
+        'url': 'http://xe.com/currency/?currency=mkd-macedonian-denar'},
+    'MMK': {
+        'symbol': '',
+        'name': 'Myanmar (Burma) Kyat',
+        'url': 'http://xe.com/currency/?currency=mmk-burmese-kyat'},
+    'MNT': {
+        'symbol': '₮',
+        'name': 'Mongolia Tughrik',
+        'url': 'http://xe.com/currency/?currency=mnt-mongolian-tughrik'},
+    'MOP': {
+        'symbol': '',
+        'name': 'Macau Pataca',
+        'url': 'http://xe.com/currency/?currency=mop-macau-pataca'},
+    'MRO': {
+        'symbol': '',
+        'name': 'Mauritania Ouguiya',
+        'url': 'http://xe.com/currency/?currency=mro-mauritanian-ouguiya'},
+    'MUR': {
+        'symbol': '₨',
+        'name': 'Mauritius Rupee',
+        'url': 'http://xe.com/currency/?currency=mur-mauritian-rupee'},
+    'MVR': {
+        'symbol': '',
+        'name': 'Maldives (Maldive Islands) Rufiyaa',
+        'url': 'http://xe.com/currency/?currency=mvr-maldivian-rufiyaa'},
+    'MWK': {
+        'symbol': '',
+        'name': 'Malawi Kwacha',
+        'url': 'http://xe.com/currency/?currency=mwk-malawian-kwacha'},
+    'MXN': {
+        'symbol': '$',
+        'name': 'Mexico Peso',
+        'url': 'http://xe.com/currency/?currency=mxn-mexican-peso'},
+    'MYR': {
+        'symbol': 'RM',
+        'name': 'Malaysia Ringgit',
+        'url': 'http://xe.com/currency/?currency=myr-malaysian-ringgit'},
+    'MZN': {
+        'symbol': 'MT',
+        'name': 'Mozambique Metical',
+        'url': 'http://xe.com/currency/?currency=mzn-mozambican-metical'},
+    'NAD': {
+        'symbol': '$',
+        'name': 'Namibia Dollar',
+        'url': 'http://xe.com/currency/?currency=nad-namibian-dollar'},
+    'NGN': {
+        'symbol': '₦',
+        'name': 'Nigeria Naira',
+        'url': 'http://xe.com/currency/?currency=ngn-nigerian-naira'},
+    'NIO': {
+        'symbol': 'C$',
+        'name': 'Nicaragua Cordoba',
+        'url': 'http://xe.com/currency/?currency=nio-nicaraguan-cordoba'},
+    'NOK': {
+        'symbol': 'kr',
+        'name': 'Norway Krone',
+        'url': 'http://xe.com/currency/?currency=nok-norwegian-krone'},
+    'NPR': {
+        'symbol': '₨',
+        'name': 'Nepal Rupee',
+        'url': 'http://xe.com/currency/?currency=npr-nepalese-rupee'},
+    'NZD': {
+        'symbol': '$',
+        'name': 'New Zealand Dollar',
+        'url': 'http://xe.com/currency/?currency=nzd-new-zealand-dollar'},
+    'OMR': {
+        'symbol': '﷼',
+        'name': 'Oman Rial',
+        'url': 'http://xe.com/currency/?currency=omr-omani-rial'},
+    'PAB': {
+        'symbol': 'B/.',
+        'name': 'Panama Balboa',
+        'url': 'http://xe.com/currency/?currency=pab-panamanian-balboa'},
+    'PEN': {
+        'symbol': 'S/.',
+        'name': 'Peru Nuevo Sol',
+        'url': 'http://xe.com/currency/?currency=pen-peruvian-nuevo-sol'},
+    'PGK': {
+        'symbol': '',
+        'name': 'Papua New Guinea Kina',
+        'url': 'http://xe.com/currency/?currency=pgk-papua-new-guinean-kina'},
+    'PHP': {
+        'symbol': '₱',
+        'name': 'Philippines Peso',
+        'url': 'http://xe.com/currency/?currency=php-philippine-peso'},
+    'PKR': {
+        'symbol': '₨',
+        'name': 'Pakistan Rupee',
+        'url': 'http://xe.com/currency/?currency=pkr-pakistani-rupee'},
+    'PLN': {
+        'symbol': 'zł',
+        'name': 'Poland Zloty',
+        'url': 'http://xe.com/currency/?currency=pln-polish-zloty'},
+    'PYG': {
+        'symbol': 'Gs',
+        'name': 'Paraguay Guarani',
+        'url': 'http://xe.com/currency/?currency=pyg-paraguayan-guarani'},
+    'QAR': {
+        'symbol': '﷼',
+        'name': 'Qatar Riyal',
+        'url': 'http://xe.com/currency/?currency=qar-qatari-riyal'},
+    'RON': {
+        'symbol': 'lei',
+        'name': 'Romania New Leu',
+        'url': 'http://xe.com/currency/?currency=ron-romanian-new-leu'},
+    'RSD': {
+        'symbol': 'Ди'
+                  'н.', 'name': 'Serbia Dinar',
+        'url': 'http://xe.com/currency/?currency=rsd-serbian-dinar'},
+    'RUB': {
+        'symbol': 'руб',
+        'name': 'Russia Ruble',
+        'url': 'http://xe.com/currency/?currency=rub-russian-ruble'},
+    'RWF': {
+        'symbol': '',
+        'name': 'Rwanda Franc',
+        'url': 'http://xe.com/currency/?currency=rwf-rwandan-franc'},
+    'SAR': {
+        'symbol': '﷼',
+        'name': 'Saudi Arabia Riyal',
+        'url': 'http://xe.com/currency/?currency=sar-saudi-arabian-riyal'},
+    'SBD': {
+        'symbol': '$',
+        'name': 'Solomon Islands Dollar',
+        'url': 'http://xe.com/currency/?currency=sbd-solomon-islander-dollar'},
+    'SCR': {
+        'symbol': '₨',
+        'name': 'Seychelles Rupee',
+        'url': 'http://xe.com/currency/?currency=scr-seychellois-rupee'},
+    'SDG': {
+        'symbol': '',
+        'name': 'Sudan Pound',
+        'url': 'http://xe.com/currency/?currency=sdg-sudanese-pound'},
+    'SEK': {
+        'symbol': 'kr',
+        'name': 'Sweden Krona',
+        'url': 'http://xe.com/currency/?currency=sek-swedish-krona'},
+    'SGD': {
+        'symbol': '$',
+        'name': 'Singapore Dollar',
+        'url': 'http://xe.com/currency/?currency=sgd-singapore-dollar'},
+    'SHP': {
+        'symbol': '£',
+        'name': 'Saint Helena Pound',
+        'url': 'http://xe.com/currency/?currency=shp-saint-helenian-pound'},
+    'SLL': {
+        'symbol': '',
+        'name': 'Sierra Leone Leone',
+        'url': 'http://xe.com/currency/?currency=sll-sierra-leonean-leone'},
+    'SOS': {
+        'symbol': 'S',
+        'name': 'Somalia Shilling',
+        'url': 'http://xe.com/currency/?currency=sos-somali-shilling'},
+    'SPL': {
+        'symbol': '',
+        'name': 'Seborga Luigino',
+        'url': 'http://xe.com/currency/?currency=spl-seborgan-luigino'},
+    'SRD': {
+        'symbol': '$',
+        'name': 'Suriname Dollar',
+        'url': 'http://xe.com/currency/?currency=srd-surinamese-dollar'},
+    'STD': {
+        'symbol': '',
+        'name': 'São Tomé and Príncipe Dobra',
+        'url': 'http://xe.com/currency/?currency=std-sao-tomean-dobra'},
+    'SVC': {
+        'symbol': '$',
+        'name': 'El Salvador Colon',
+        'url': 'http://xe.com/currency/?currency=svc-salvadoran-colon'},
+    'SYP': {
+        'symbol': '£',
+        'name': 'Syria Pound',
+        'url': 'http://xe.com/currency/?currency=syp-syrian-pound'},
+    'SZL': {
+        'symbol': '',
+        'name': 'Swaziland Lilangeni',
+        'url': 'http://xe.com/currency/?currency=szl-swazi-lilangeni'},
+    'THB': {
+        'symbol': '฿',
+        'name': 'Thailand Baht',
+        'url': 'http://xe.com/currency/?currency=thb-thai-baht'},
+    'TJS': {
+        'symbol': '',
+        'name': 'Tajikistan Somoni',
+        'url': 'http://xe.com/currency/?currency=tjs-tajikistani-somoni'},
+    'TMT': {
+        'symbol': '',
+        'name': 'Turkmenistan Manat',
+        'url': 'http://xe.com/currency/?currency=tmt-turkmenistani-manat'},
+    'TND': {
+        'symbol': '',
+        'name': 'Tunisia Dinar',
+        'url': 'http://xe.com/currency/?currency=tnd-tunisian-dinar'},
+    'TOP': {
+        'symbol': '',
+        'name': "Tonga Pa'anga",
+        'url': "http://xe.com/currency/?currency=top-tongan-pa'anga"},
+    'TRY': {
+        'symbol': '₺',
+        'name': 'Turkey Lira',
+        'url': 'http://xe.com/currency/?currency=try-turkish-lira'},
+    'TTD': {
+        'symbol': 'TT$',
+        'name': 'Trinidad and Tobago Dollar',
+        'url': 'http://xe.com/currency/?currency=ttd-trinidadian-dollar'},
+    'TVD': {
+        'symbol': '$',
+        'name': 'Tuvalu Dollar',
+        'url': 'http://xe.com/currency/?currency=tvd-tuvaluan-dollar'},
+    'TWD': {
+        'symbol': 'NT$',
+        'name': 'Taiwan New Dollar',
+        'url': 'http://xe.com/currency/?currency=twd-taiwan-new-dollar'},
+    'TZS': {
+        'symbol': '',
+        'name': 'Tanzania Shilling',
+        'url': 'http://xe.com/currency/?currency=tzs-tanzanian-shilling'},
+    'UAH': {
+        'symbol': '₴',
+        'name': 'Ukraine Hryvnia',
+        'url': 'http://xe.com/currency/?currency=uah-ukrainian-hryvnia'},
+    'UGX': {
+        'symbol': '',
+        'name': 'Uganda Shilling',
+        'url': 'http://xe.com/currency/?currency=ugx-ugandan-shilling'},
+    'USD': {
+        'symbol': '$',
+        'name': 'United States Dollar',
+        'url': 'http://xe.com/currency/?currency=usd-us-dollar'},
+    'UYU': {
+        'symbol': '$U',
+        'name': 'Uruguay Peso',
+        'url': 'http://xe.com/currency/?currency=uyu-uruguayan-peso'},
+    'UZS': {
+        'symbol': 'лв',
+        'name': 'Uzbekistan Som',
+        'url': 'http://xe.com/currency/?currency=uzs-uzbekistani-som'},
+    'VEF': {
+        'symbol': 'Bs',
+        'name': 'Venezuela Bolivar',
+        'url': 'http://xe.com/currency/?currency=vef-venezuelan-bolivar'},
+    'VND': {
+        'symbol': '₫',
+        'name': 'Viet Nam Dong',
+        'url': 'http://xe.com/currency/?currency=vnd-vietnamese-dong'},
+    'VUV': {
+        'symbol': '',
+        'name': 'Vanuatu Vatu',
+        'url': 'http://xe.com/currency/?currency=vuv-ni-vanuatu-vatu'},
+    'WST': {
+        'symbol': '',
+        'name': 'Samoa Tala',
+        'url': 'http://xe.com/currency/?currency=wst-samoan-tala'},
+    'XAF': {
+        'symbol': '',
+        'name': 'Central African CFA franc',
+        'url': 'http://xe.com/currency/?currency=xaf-central-african-cfa-franc-beac'},
+    'XCD': {
+        'symbol': '$',
+        'name': 'East Caribbean Dollar',
+        'url': 'http://xe.com/currency/?currency=xcd-east-caribbean-dollar'},
+    'XOF': {
+        'symbol': '',
+        'name': 'West African CFA Franc',
+        'url': 'http://xe.com/currency/?currency=xof-cfa-franc'},
+    'XPF': {
+        'symbol': '',
+        'name': 'CFP Franc',
+        'url': 'http://xe.com/currency/?currency=xpf-cfp-franc'},
+    'YER': {
+        'symbol': '﷼',
+        'name': 'Yemen Rial',
+        'url': 'http://xe.com/currency/?currency=yer-yemeni-rial'},
+    'ZAR': {
+        'symbol': 'R',
+        'name': 'South Africa Rand',
+        'url': 'http://xe.com/currency/?currency=zar-south-african-rand'},
+    'ZMW': {
+        'symbol': '',
+        'name': 'Zambia Kwacha',
+        'url': 'http://xe.com/currency/?currency=zmw-zambian-kwacha'},
+    'ZWD': {
+        'symbol': 'Z$',
+        'name': 'Zimbabwe Dollar',
+        'url': 'http://xe.com/currency/?currency=zwd-zimbabwean-dollar'}
 }
+
 
 # COMMANDS
 # ---------------------------------------------------------------------------------------------------------------------#
@@ -395,7 +928,7 @@ class Command(BaseCommand):
 
         logger.info('Getting currency data...')
         # url = 'https://gist.githubusercontent.com/Fluidbyte/2973986/raw/' \
-        #       '9ead0f85b6ee6071d018564fa5a314a0297212cc/Common-Currency.json'
+        # '9ead0f85b6ee6071d018564fa5a314a0297212cc/Common-Currency.json'
         # response = requests.get(url)
 
         # for key, value in response.json().items():

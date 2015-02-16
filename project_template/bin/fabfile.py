@@ -14,10 +14,10 @@ def env_local():
 
 
 def env_staging():
-    env.hosts = ['196.28.18.116']
-    env.port = 8622
-    env.user = 'canary'
-    env.keyfile = '/home/canary/.ssh/id_rsa_owtk.pem'
+    env.hosts = ['0.0.0.0']
+    env.port = 22
+    env.user = 'user'
+    env.keyfile = '/home/user/.ssh/id_rsa_owtk.pem'
     env.password = ''
     env.directory = '/home/webapps/Projects/{{ project_name }}/src/'
     # env.activate = 'source /home/webapps/Virtualenvs/{{ project_name }}/bin/activate'

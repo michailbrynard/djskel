@@ -13,7 +13,6 @@ touch var/log/nginx-access.log
 
 touch tmp/uwsgi.sock
 
-
 ./src/manage.py collectstatic -v0 --noinput
 #mkproject {{ project_name }}
 
