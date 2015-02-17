@@ -1,4 +1,0 @@
-vendor
-survey
-bootstrap3
-fact_book
