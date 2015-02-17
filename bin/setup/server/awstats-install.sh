@@ -26,7 +26,12 @@ unzip GeoIP.dat.gz
 unzip GeoLiteCity.dat.gz
 
 sudo mv GeoIP.dat /usr/local/lib/
-sudo mv GeoLiteCity.dat /usr/local/lib/
+sudo mv GeoLiteCity.dat /usr/local/lib/GeoIPCity.dat
 
 sudo chown webapps:webapps /usr/local/lib/GeoIP.dat
 sudo chown webapps:webapps /usr/local/lib/GeoLiteCity.dat
+
+sudo apt-get install munin spawn-fcgi
+
+sudo spawn-fcgi -s /var/run/munin/fastcgi-graph.sock -U webapps -u munin -g munin /usr/lib/munin/cgi/munin-cgi-graph
+sudo spawn-fcgi -s /var/run/munin/fastcgi-html.sock  -U webapps -u munin -g munin /usr/lib/munin/cgi/munin-cgi-html
