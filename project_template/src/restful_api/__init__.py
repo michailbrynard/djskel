@@ -1,1 +1,0 @@
-default_app_config = 'restful_api.apps.App1Config'
