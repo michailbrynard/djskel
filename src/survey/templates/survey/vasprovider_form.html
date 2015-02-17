@@ -1,0 +1,85 @@
+{% if form %}
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title" id="providerAddModalLabel">
+            {% if object %}
+                Update Trusted VAS Vendor
+            {% else %}
+                Add Trusted VAS Vendor
+            {% endif %}
+        </h4>
+    </div>
+
+    {% if object %}
+        <form method="POST" class="form" action="{% url 'survey:provider_update' object.id %}" role="form"
+              id="vas_provider_form">
+    {% else %}
+        <form method="POST" class="form" action="{% url 'survey:provider_add' %}" role="form"
+              id="vas_provider_form">
+    {% endif %}
+
+{% csrf_token %}
+<div class="modal-body">
+    {% load bootstrap3 %}
+    {% bootstrap_messages %}
+
+    {% bootstrap_field form.vas_company_name %}
+    {% bootstrap_field form.active_countries %}
+
+    <div id="other_service_container" class="well anti-well clearfix other">
+        {% bootstrap_field form.services_provided layout="" %}
+        <div class="row">
+            <div class="col-xs-4">
+                <div class="input-group">
+                    <input id="other_service_provided" type="text" class="form-control"
+                           placeholder="Other (please specify...)"/>
+                      <span class="input-group-btn">
+                        <button id="other_service_provided_button" class="btn btn-default" type="button">Add</button>
+                      </span>
+                </div>
+                <!-- /input-group -->
+            </div>
+        </div>
+    </div>
+
+    <div class="well">
+        <div class="form-group">
+            {% bootstrap_field form.strong_services layout="" %}
+        </div>
+    </div>
+
+    <div id="other_reliable_container" class="well anti-well clearfix other">
+        {% bootstrap_field form.trust_attributes layout="" %}
+        <div class="row">
+            <div class="col-xs-4">
+                <div class="input-group">
+                    <input id="other_reliable" type="text" class="form-control"
+                           placeholder="Other (please specify...)"/>
+                      <span class="input-group-btn">
+                        <button id="other_reliable_button" class="btn btn-default" type="button">Add</button>
+                      </span>
+                </div>
+                <!-- /input-group -->
+            </div>
+        </div>
+    </div>
+
+    {% bootstrap_field form.contact_name %}
+    {% bootstrap_field form.contact_email %}
+</div>
+
+<div class="modal-footer">
+    {% buttons %}
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        {% if object %}
+            <button type="submit" class="btn btn-primary">Update Trusted VAS Vendor</button>
+        {% else %}
+            <button type="submit" class="btn btn-primary">Add Trusted VAS Vendor</button>
+        {% endif %}
+    {% endbuttons %}
+</div>
+
+</form>
+{% endif %}

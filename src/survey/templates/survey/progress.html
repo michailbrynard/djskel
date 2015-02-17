@@ -1,0 +1,12 @@
+{% if form %}
+    <form id="progress_form" method="post" role="form">
+        {% csrf_token %}
+
+        {{ form }}
+{#        {{ form.is_section_1_reviewed }}#}
+{#        {{ form.is_section_1_reviewed }}#}
+{#        {{ form.is_section_2_reviewed }}#}
+{#        {{ form.is_section_3_reviewed }}#}
+
+    </form>
+{% endif %}
