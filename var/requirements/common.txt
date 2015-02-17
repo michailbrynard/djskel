@@ -1,0 +1,16 @@
+django
+pillow
+django-grappelli
+django-reversion
+django-filebrowser
+django-filter
+django-import-export
+django-tinymce
+django-guardian
+django-ckeditor-updated
+djangorestframework
+simplejson
+tablib
+diff-match-patch
+feedparser
+pytz
