@@ -4,18 +4,19 @@ DEBUG = False
 TEMPLATE_DEBUG = False
 ALLOWED_HOSTS = ['*']
 
-WSGI_APPLICATION = 'config.wsgi.production.application'
-BASE_URL = 'http://127.0.0.1/'
-
+WSGI_APPLICATION = 'config.wsgi.application'
+# BASE_URL = 'http://127.0.0.1/'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3', 
-        'NAME': os.path.join(BASE_DIR, 'django.db'),
-    },
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': '{{ project_name }}',
+        'USER': '{{ project_name }}',
+        'PASSWORD': '{{ secret_key }}',
+        'HOST': 'localhost',
+        'PORT': '',
+    }
 }
-
-
 # EMAIL
 # ---------------------------------------------------------------------------------------------------------------------
 # For possible shortcuts see django.core.mail

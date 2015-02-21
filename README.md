@@ -16,7 +16,7 @@ How to use
 
 3. Create django project from template
     ```bash
-       django-admin startproject --template=https://github.com/obitec/djskel/archive/master.zip --extension=py --extension=conf --extension=sh --extension=ini {{ project_name }}
+       django-admin startproject --template=https://github.com/obitec/djskel/archive/master.zip --extension=py --extension=conf --extension=sh --extension=ini --extension=rst {{ project_name }}
     ```
 4. Run the installer
 ```bash
