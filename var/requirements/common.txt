@@ -1,6 +1,12 @@
-django
-pillow
+# Django
+# --------------------------------------
+django>=1.7
+
+
+# Extensions
+# --------------------------------------
 django-grappelli
+django-object-tools
 django-reversion
 django-filebrowser
 django-filter
@@ -8,9 +14,12 @@ django-import-export
 django-tinymce
 django-guardian
 django-ckeditor-updated
-djangorestframework
-simplejson
-tablib
-diff-match-patch
-feedparser
-pytz
+django-bootstrap3
+django-report-builder
+
+
+# Core
+# --------------------------------------
+requests
+pillow
+pyaml
