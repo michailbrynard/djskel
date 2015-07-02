@@ -41,6 +41,7 @@ sudo service ssh restart
 sudo apt-get install ncurses-term htop vim python3-pip nginx git npm postgresql
 sudo npm install -g bower
 sudo pip3 install uwsgi
+
 # TODO: Build and install lates vim and bash from source
 
 
@@ -63,19 +64,19 @@ EOT
 
 # INSTALL AND CONFIDURE MINICONDA
 # --------------------------------------------------------------------------------------------------------------------#
-wget http://repo.continuum.io/miniconda/Miniconda3-3.7.3-Linux-x86_64.sh
-#TODO: How to get latest conda?
-sudo bash ./Miniconda3-3.7.3-Linux-x86_64.sh
-export PATH=/home/canary/miniconda3/bin/:$PATH
-conda udpate conda
-conda create -n webapps python=3.4 ipython django pip
+wget http://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh
+chmod +x miniconda.sh
+
+export PATH=/home/canary/miniconda/bin:$PATH
+conda update --yes conda 
+conda create --yes -n webapps python=3.4 ipython django pip
 
 #git clone ssh://ocean_git/~/djskel /home/webapps/projects/djskel
 
 # TODO: Create a workon script
-#export PATH=/home/canary/miniconda3/bin/:$PATH
-#source activate webapps
 #vi workon.sh
+#export PATH=/home/canary/miniconda/bin/:$PATH && source activate webapps
+#source activate webapps
 #chmod +x workon.sh
 #source ./workon.sh
 
