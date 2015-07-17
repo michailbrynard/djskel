@@ -36,6 +36,7 @@ How to deploy
 
 Feutures
 --------
+- conda env create
 - Django 1.7 or newer (TODO 1.8 and above)
 - UWSGI
 - Gunicorn
