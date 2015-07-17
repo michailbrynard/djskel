@@ -36,19 +36,21 @@ How to deploy
 
 Feutures
 --------
-- Django 1.7 or newer
+- Django 1.7 or newer (TODO 1.8 and above)
 - UWSGI
 - Gunicorn
 - Nginx
 - Postgresql
-- Fig
+- Fig (TODO update for docker-compose)
 - Docker
 - Vagrant
 - Celery (TODO)
 - Redis (TODO)
 - Custom User model (TODO)
 - Munin
-- 
+- Jinja2 templating by default (TODO)
+- Yeoman webapp integration (TODO)
+- requirejs
 
 Django Extensions
 -----------------
@@ -59,8 +61,8 @@ Django Extensions
 
 Custom Apps
 --------------
-- Munin
 - FactBook
 - Issue Tracker
+- Munin
 
 
