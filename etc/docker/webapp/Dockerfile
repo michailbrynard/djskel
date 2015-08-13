@@ -4,7 +4,7 @@
 # This image builds on the zapgo/miniconda image to create a non-privilaged user
 # and defines onbuild commands for specific webapps.
 #
-FROM zapgo/miniconda
+FROM kmaginary/miniconda
 MAINTAINER JR Minnaar <jr.minnaar@gmail.com>
 
 #
