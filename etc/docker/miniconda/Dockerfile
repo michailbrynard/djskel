@@ -2,7 +2,7 @@
 # 
 # This image builds on the zapgo/base image and install miniconda
 #
-FROM kmaginary/base
+FROM kmaginary/base:base
 MAINTAINER JR Minnaar <jr.minnaar@gmail.com>
 
 #
